@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using MediatR;
 
-namespace MicroSungero.Kernel.Domain
+namespace MicroSungero.Kernel.Domain.DomainEvents
 {
   /// <summary>
   /// An immutable model for something that happened within the domain bounded context.

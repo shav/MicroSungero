@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
+using MicroSungero.Kernel.Domain.DomainEvents;
 
 namespace MicroSungero.Kernel.Domain.Services
 {

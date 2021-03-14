@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace MicroSungero.Kernel.Domain
+namespace MicroSungero.Kernel.Domain.DomainEvents
 {
   /// <summary>
   /// A service notifying subscribers about domain events.

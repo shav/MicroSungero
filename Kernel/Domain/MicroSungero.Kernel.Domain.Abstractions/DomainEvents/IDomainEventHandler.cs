@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using MediatR;
 
-namespace MicroSungero.Kernel.Domain
+namespace MicroSungero.Kernel.Domain.DomainEvents
 {
   /// <summary>
   /// A handler for the certain type of domain events.
