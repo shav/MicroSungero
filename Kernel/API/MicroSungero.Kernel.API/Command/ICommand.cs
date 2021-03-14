@@ -23,7 +23,7 @@ namespace MicroSungero.Kernel.API
   /// https://en.wikipedia.org/wiki/Command%E2%80%93query_separation
   /// https://microservices.io/patterns/data/cqrs.html
   /// </remarks>
-  public interface ICommand : IRequest
+  public interface ICommand : ICommand<Unit>, IRequest
   {
   }
 }

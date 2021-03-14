@@ -8,7 +8,7 @@ namespace MicroSungero.Kernel.Domain.Validation
   /// Object validator that can throw validation exceptions.
   /// </summary>
   /// <typeparam name="T">Type of objects that are validated by particular implementation of validator.</typeparam>
-  public interface IErrorValidator<T>
+  public interface IErrorValidator<in T>
   {
     /// <summary>
     /// Validate object.

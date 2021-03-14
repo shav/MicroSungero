@@ -6,6 +6,11 @@
 
   <ItemGroup>
     <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="FluentValidation" Version="9.5.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Domain\MicroSungero.Kernel.Domain.Abstractions\MicroSungero.Kernel.Domain.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>
