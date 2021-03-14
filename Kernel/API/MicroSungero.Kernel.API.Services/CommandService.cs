@@ -1,8 +1,7 @@
 ﻿using System.Threading.Tasks;
 using MediatR;
-using MicroSungero.Kernel.API;
 
-namespace MicroSungero.Kernel.Infrastructure.Services
+namespace MicroSungero.Kernel.API.Services
 {
   /// <summary>
   /// An implementation of the service that executes commands.

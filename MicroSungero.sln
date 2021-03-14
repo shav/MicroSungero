@@ -3,19 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroSungero.Kernel.Domain", "MicroSungero.Kernel.Domain\MicroSungero.Kernel.Domain.csproj", "{ED74353F-9A5E-480A-85D2-5AFFE4D1ADDB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroSungero.Kernel.Domain", "Kernel\Domain\MicroSungero.Kernel.Domain\MicroSungero.Kernel.Domain.csproj", "{ED74353F-9A5E-480A-85D2-5AFFE4D1ADDB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroSungero.Kernel.Infrastructure", "MicroSungero.Kernel.Infrastructure\MicroSungero.Kernel.Infrastructure.csproj", "{AA850190-E6F1-4781-9F40-A00860477555}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroSungero.Kernel.API.Services", "Kernel\API\MicroSungero.Kernel.API.Services\MicroSungero.Kernel.API.Services.csproj", "{AA850190-E6F1-4781-9F40-A00860477555}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroSungero.Kernel.API", "MicroSungero.Kernel.API\MicroSungero.Kernel.API.csproj", "{5894F154-1C3C-4DAF-AFE8-BDE376EA83B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroSungero.Kernel.API", "Kernel\API\MicroSungero.Kernel.API\MicroSungero.Kernel.API.csproj", "{5894F154-1C3C-4DAF-AFE8-BDE376EA83B5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroSungero.Kernel.Module", "MicroSungero.Kernel.Module\MicroSungero.Kernel.Module.csproj", "{2F37AAA9-C0DE-448A-9685-6E42798BD3AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroSungero.Kernel.Module", "Kernel\Module\MicroSungero.Kernel.Module\MicroSungero.Kernel.Module.csproj", "{2F37AAA9-C0DE-448A-9685-6E42798BD3AA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Kernel", "Kernel", "{49431BB1-436D-4244-B87B-86942FA9C690}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{11CE7CDF-FB53-4E67-8449-BA41AE2A5892}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroSungero.Common.Utils", "MicroSungero.Common.Utils\MicroSungero.Common.Utils.csproj", "{D55DFE17-F005-4F3D-87E6-B1F2EA145599}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroSungero.Common.Utils", "Common\MicroSungero.Common.Utils\MicroSungero.Common.Utils.csproj", "{D55DFE17-F005-4F3D-87E6-B1F2EA145599}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{63FF9B56-151A-4D07-9582-5ADC53CBEF73}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{70DAE183-DDF7-41FF-A04A-934D666E82EB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Module", "Module", "{4675EF77-9743-4CB2-A91D-2721BFF65896}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,11 +54,14 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{ED74353F-9A5E-480A-85D2-5AFFE4D1ADDB} = {49431BB1-436D-4244-B87B-86942FA9C690}
-		{AA850190-E6F1-4781-9F40-A00860477555} = {49431BB1-436D-4244-B87B-86942FA9C690}
-		{5894F154-1C3C-4DAF-AFE8-BDE376EA83B5} = {49431BB1-436D-4244-B87B-86942FA9C690}
-		{2F37AAA9-C0DE-448A-9685-6E42798BD3AA} = {49431BB1-436D-4244-B87B-86942FA9C690}
+		{ED74353F-9A5E-480A-85D2-5AFFE4D1ADDB} = {70DAE183-DDF7-41FF-A04A-934D666E82EB}
+		{AA850190-E6F1-4781-9F40-A00860477555} = {63FF9B56-151A-4D07-9582-5ADC53CBEF73}
+		{5894F154-1C3C-4DAF-AFE8-BDE376EA83B5} = {63FF9B56-151A-4D07-9582-5ADC53CBEF73}
+		{2F37AAA9-C0DE-448A-9685-6E42798BD3AA} = {4675EF77-9743-4CB2-A91D-2721BFF65896}
 		{D55DFE17-F005-4F3D-87E6-B1F2EA145599} = {11CE7CDF-FB53-4E67-8449-BA41AE2A5892}
+		{63FF9B56-151A-4D07-9582-5ADC53CBEF73} = {49431BB1-436D-4244-B87B-86942FA9C690}
+		{70DAE183-DDF7-41FF-A04A-934D666E82EB} = {49431BB1-436D-4244-B87B-86942FA9C690}
+		{4675EF77-9743-4CB2-A91D-2721BFF65896} = {49431BB1-436D-4244-B87B-86942FA9C690}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C42FBA66-2A66-4FD1-97AA-6C9FF786B984}
