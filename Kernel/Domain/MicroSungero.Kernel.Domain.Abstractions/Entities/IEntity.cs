@@ -26,6 +26,11 @@ namespace MicroSungero.Kernel.Domain.Entities
     /// Entity type identifier is unique within the whole application.
     /// </remarks>
     Guid TypeGuid { get; }
+
+    /// <summary>
+    /// String display value of entity.
+    /// </summary>
+    string DisplayValue { get; }
   }
 
   /// <summary>
