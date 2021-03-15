@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 namespace MicroSungero.Kernel.Domain.DomainEvents
 {
   /// <summary>
-  /// An immutable model for something that happened within the domain bounded context.
+  /// Domain event is an immutable model for something that happened within the domain bounded context.
   /// </summary>
   public abstract class DomainEvent : IDomainEvent, IErrorHandlingDomainEvent
   {

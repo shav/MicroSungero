@@ -1,7 +1,7 @@
 ﻿namespace MicroSungero.Kernel.Domain.Entities
 {
   /// <summary>
-  /// The entity whose lifecycle is entirely dependent on another entity (which is called root or parent entity).
+  /// Child entity is the entity whose lifecycle is entirely dependent on another entity (which is called root or parent entity).
   /// </summary>
   /// <remarks>
   /// It’s a strong relationship: the Child Entity has only meaning in the context of its parent, and cannot exist outside of it.
