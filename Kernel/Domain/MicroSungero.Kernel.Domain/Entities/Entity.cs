@@ -51,7 +51,7 @@ namespace MicroSungero.Kernel.Domain.Entities
 
     public override string ToString()
     {
-      return $"{{ Id: {this.Id}, TypeGuid: {this.TypeGuid}}}";
+      return $"{{{nameof(this.TypeGuid)}: {this.TypeGuid}, {nameof(Id)}: {this.Id}}}";
     }
 
     #endregion
