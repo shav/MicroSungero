@@ -6,12 +6,13 @@ namespace MicroSungero.Kernel.Domain.Entities
   /// Base domain event generated from or for entities.
   /// </summary>
   /// <typeparam name="TEntity">Entity type.</typeparam>
-  public abstract class EntityDomainEvent<TEntity> : DomainEvent
+  public abstract class EntityDomainEvent<TEntity> : DomainEvent, IEntityDomainEvent<TEntity>
   {
-    /// <summary>
-    /// Entity which domain event generated for.
-    /// </summary>
+    #region IEntityDomainEvent
+
     public TEntity Entity { get; protected set; }
+
+    #endregion
 
     /// <summary>
     /// Create entity domain event.
@@ -26,7 +27,7 @@ namespace MicroSungero.Kernel.Domain.Entities
   /// <summary>
   /// Base domain event generated from or for entities.
   /// </summary>
-  public abstract class EntityDomainEvent : EntityDomainEvent<IEntity>
+  public abstract class EntityDomainEvent : EntityDomainEvent<IEntity>, IEntityDomainEvent
   {
     /// <summary>
     /// Create entity domain event.
