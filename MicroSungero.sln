@@ -37,6 +37,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroSungero.Data.Abstracti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroSungero.Kernel.Domain.Exceptions", "Kernel\Domain\MicroSungero.Kernel.Domain.Exceptions\MicroSungero.Kernel.Domain.Exceptions.csproj", "{08F9FCFB-3948-49E3-93B6-593F9C6AC817}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroSungero.Kernel.Domain.Entities", "Kernel\Domain\MicroSungero.Kernel.Domain.Entities\MicroSungero.Kernel.Domain.Entities.csproj", "{44E6D8ED-7C2E-4685-A4B2-F99CFE6B2A51}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{08F9FCFB-3948-49E3-93B6-593F9C6AC817}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08F9FCFB-3948-49E3-93B6-593F9C6AC817}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08F9FCFB-3948-49E3-93B6-593F9C6AC817}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44E6D8ED-7C2E-4685-A4B2-F99CFE6B2A51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44E6D8ED-7C2E-4685-A4B2-F99CFE6B2A51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44E6D8ED-7C2E-4685-A4B2-F99CFE6B2A51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44E6D8ED-7C2E-4685-A4B2-F99CFE6B2A51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -107,6 +113,7 @@ Global
 		{9782790F-D581-4975-83F9-61EC1EE83983} = {23642B4F-A9E4-4F09-99B5-B71335BAAC53}
 		{00397558-63A6-4AB3-87D8-2E4FB34FCEE1} = {23642B4F-A9E4-4F09-99B5-B71335BAAC53}
 		{08F9FCFB-3948-49E3-93B6-593F9C6AC817} = {70DAE183-DDF7-41FF-A04A-934D666E82EB}
+		{44E6D8ED-7C2E-4685-A4B2-F99CFE6B2A51} = {70DAE183-DDF7-41FF-A04A-934D666E82EB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C42FBA66-2A66-4FD1-97AA-6C9FF786B984}
