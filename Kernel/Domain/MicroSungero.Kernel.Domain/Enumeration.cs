@@ -9,13 +9,9 @@ namespace MicroSungero.Kernel.Domain
   /// An named item of complete ended set of items.
   /// Also used as a container for the set of named enumerated items.
   /// </summary>
-  /// <remarks>
-  /// See also for more details:
-  /// https://en.wikipedia.org/wiki/Enumerated_type
-  /// </remarks>
-  public class Enumeration : IComparable
+  public class Enumeration : IEnumeration, IComparable
   {
-    #region Properties and fields
+    #region IEnumeration
 
     /// <summary>
     /// The value of enumeration item.
