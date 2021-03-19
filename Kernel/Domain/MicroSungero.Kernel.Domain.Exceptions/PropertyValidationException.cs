@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using FluentValidation.Results;
+using MicroSungero.Kernel.Domain.Validation;
 
 namespace MicroSungero.Kernel.Domain.Exceptions
 {
   /// <summary>
   /// Exception occured while object properties validation.
   /// </summary>
-  public class PropertyValidationException : ValidationException
+  public class PropertyValidationException : Exception
   {
     #region Properties and fields
 
@@ -27,10 +27,10 @@ namespace MicroSungero.Kernel.Domain.Exceptions
     /// Initialize properties validation errors of this exception.
     /// </summary>
     /// <param name="errors">Properties validation failures.</param>
-    private void SetPropertiesValidationErrors(IEnumerable<ValidationFailure> errors)
+    private void SetPropertiesValidationErrors(IEnumerable<IValidationFailure> errors)
     {
       this.Errors = errors
-        .GroupBy(e => e.PropertyName, e => e.ErrorMessage)
+        .GroupBy(e => (e as IPropertyValidationFailure)?.PropertyName ?? string.Empty, e => e.ErrorMessage)
         .ToDictionary(e => e.Key, e => e.ToArray());
     }
 
@@ -44,6 +44,7 @@ namespace MicroSungero.Kernel.Domain.Exceptions
     public PropertyValidationException()
       : base()
     {
+      this.Errors = new Dictionary<string, string[]>();
     }
 
     /// <summary>
@@ -60,7 +61,7 @@ namespace MicroSungero.Kernel.Domain.Exceptions
     /// Create properties validation exception.
     /// </summary>
     /// <param name="errors">Properties validation failures.</param>
-    public PropertyValidationException(IEnumerable<ValidationFailure> errors)
+    public PropertyValidationException(IEnumerable<IValidationFailure> errors)
     {
       this.SetPropertiesValidationErrors(errors);
     }
@@ -70,7 +71,7 @@ namespace MicroSungero.Kernel.Domain.Exceptions
     /// </summary>
     /// <param name="message">Message.</param>
     /// <param name="errors">Properties validation failures.</param>
-    public PropertyValidationException(string message, IEnumerable<ValidationFailure> errors)
+    public PropertyValidationException(string message, IEnumerable<IValidationFailure> errors)
       : this(message)
     {
       this.SetPropertiesValidationErrors(errors);
@@ -87,7 +88,10 @@ namespace MicroSungero.Kernel.Domain.Exceptions
       foreach (var propertyError in this.Errors)
       {
         var propertyName = propertyError.Key;
-        message.AppendLine($"{propertyName}:");
+        if (!string.IsNullOrWhiteSpace(propertyName))
+          message.AppendLine($"{propertyName}:");
+        else if (this.Errors.Keys.Any(p => !string.IsNullOrWhiteSpace(p)))
+          message.AppendLine("Other validation errors:");
 
         foreach (var error in propertyError.Value)
         {

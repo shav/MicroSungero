@@ -1,6 +1,5 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using FluentValidation.Results;
 
 namespace MicroSungero.Kernel.Domain.Validation
 {
@@ -16,7 +15,7 @@ namespace MicroSungero.Kernel.Domain.Validation
     /// <param name="instance">Object instance.</param>
     /// <param name="throwOnErrors">Should throw exception on validation error?</param>
     /// <returns>Validation result.</returns>
-    ValidationResult Validate(T instance, bool throwOnErrors);
+    IValidationResult Validate(T instance, bool throwOnErrors);
 
     /// <summary>
     /// Async validate object.
@@ -25,6 +24,6 @@ namespace MicroSungero.Kernel.Domain.Validation
     /// <param name="throwOnErrors">Should throw exception on validation error?</param>
     /// <param name="cancellation">Cancellation token.</param>
     /// <returns>Validation result.</returns>
-    Task<ValidationResult> ValidateAsync(T instance, bool throwOnErrors, CancellationToken cancellation = default);
+    Task<IValidationResult> ValidateAsync(T instance, bool throwOnErrors, CancellationToken cancellation = default);
   }
 }

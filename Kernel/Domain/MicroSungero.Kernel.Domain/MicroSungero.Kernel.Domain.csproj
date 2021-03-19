@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MicroSungero.Kernel.Domain.Abstractions\MicroSungero.Kernel.Domain.Abstractions.csproj" />
+    <ProjectReference Include="..\MicroSungero.Kernel.Domain.Exceptions\MicroSungero.Kernel.Domain.Exceptions.csproj" />
   </ItemGroup>
 
 </Project>

@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Domain\MicroSungero.Kernel.Domain.Exceptions\MicroSungero.Kernel.Domain.Exceptions.csproj" />
     <ProjectReference Include="..\..\Domain\MicroSungero.Kernel.Domain\MicroSungero.Kernel.Domain.csproj" />
     <ProjectReference Include="..\MicroSungero.Kernel.API\MicroSungero.Kernel.API.csproj" />
   </ItemGroup>

@@ -1,7 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
-using FluentValidation.Results;
 
 namespace MicroSungero.Kernel.Domain.Validation
 {
@@ -13,20 +12,20 @@ namespace MicroSungero.Kernel.Domain.Validation
   {
     #region IErrorValidator
 
-    public ValidationResult Validate(T instance, bool throwOnErrors)
+    public IValidationResult Validate(T instance, bool throwOnErrors)
     {
       if (throwOnErrors)
-        return base.Validate(ValidationContext<T>.CreateWithOptions(instance, s => s.ThrowOnFailures()));
+        return new ValidationResult(base.Validate(ValidationContext<T>.CreateWithOptions(instance, s => s.ThrowOnFailures())));
       else
-        return base.Validate(instance);
+        return new ValidationResult(base.Validate(instance));
     }
 
-    public Task<ValidationResult> ValidateAsync(T instance, bool throwOnErrors, CancellationToken cancellation = default)
+    public async Task<IValidationResult> ValidateAsync(T instance, bool throwOnErrors, CancellationToken cancellation = default)
     {
       if (throwOnErrors)
-        return base.ValidateAsync(ValidationContext<T>.CreateWithOptions(instance, s => s.ThrowOnFailures()), cancellation);
+        return new ValidationResult(await base.ValidateAsync(ValidationContext<T>.CreateWithOptions(instance, s => s.ThrowOnFailures()), cancellation));
       else
-        return base.ValidateAsync(instance);
+        return new ValidationResult(await base.ValidateAsync(instance));
     }
 
     #endregion
