@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using FluentValidation;
 using MicroSungero.Kernel.API.Validation;
 
 namespace MicroSungero.Kernel.API.Services
