@@ -8,12 +8,7 @@ namespace MicroSungero.Kernel.Domain
   /// A small immutable object whose equality is not based on identity,
   /// i.e. two value objects are equal when they have the same value, not necessarily being the same object.
   /// </summary>
-  /// <remarks>
-  /// See also for more details:
-  /// https://en.wikipedia.org/wiki/Value_object
-  /// https://martinfowler.com/bliki/ValueObject.html
-  /// </remarks>
-  public abstract class ValueObject : ICloneable
+  public abstract class ValueObject : IValueObject, ICloneable
   {
     #region Methods
 
@@ -75,7 +70,7 @@ namespace MicroSungero.Kernel.Domain
 
     #region ICloneable
 
-    public object Clone()
+    public virtual object Clone()
     {
       return this.MemberwiseClone() as ValueObject;
     }
