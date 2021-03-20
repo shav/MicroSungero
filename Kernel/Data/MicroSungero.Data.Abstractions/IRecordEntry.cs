@@ -3,7 +3,7 @@
   /// <summary>
   /// Change tracking entry for the persistent record.
   /// </summary>
-  /// <typeparam name="TRecord"></typeparam>
+  /// <typeparam name="TRecord">Type of persistent record.</typeparam>
   public interface IRecordEntry<TRecord>
   {
     /// <summary>
