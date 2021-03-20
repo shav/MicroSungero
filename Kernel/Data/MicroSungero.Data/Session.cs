@@ -65,6 +65,8 @@ namespace MicroSungero.Data
 
     public TRecord Create<TRecord>() where TRecord : class
     {
+      this.CheckIfNotDisposed(nameof(Create));
+
       var record = Activator.CreateInstance<TRecord>();
       var persistentRecord = record as IPersistentObject;
       if (persistentRecord != null)
@@ -77,6 +79,8 @@ namespace MicroSungero.Data
 
     public void Delete<TRecord>(TRecord record) where TRecord : class
     {
+      this.CheckIfNotDisposed(nameof(Delete));
+
       this.dbContext.Remove(record);
 
       var persistentRecord = record as IPersistentObject;
@@ -86,6 +90,8 @@ namespace MicroSungero.Data
 
     public TRecord Attach<TRecord>(TRecord record) where TRecord : class
     {
+      this.CheckIfNotDisposed(nameof(Attach));
+
       var persistentRecord = record as IPersistentObject;
       if (persistentRecord == null)
         return this.dbContext.Attach(record).Record;
@@ -122,11 +128,14 @@ namespace MicroSungero.Data
 
     public IQueryable<TRecord> GetAll<TRecord>() where TRecord : class
     {
+      this.CheckIfNotDisposed(nameof(GetAll));
       return this.dbContext.GetAll<TRecord>();
     }
 
     public TEntity GetById<TEntity>(int id) where TEntity : class, IEntity
     {
+      this.CheckIfNotDisposed(nameof(GetById));
+
       var entity = this.dbContext.GetById<TEntity>(id);
       if (entity == null)
         throw new ObjectNotFoundException(typeof(TEntity).FullName, $"Id = {id}");
@@ -136,6 +145,8 @@ namespace MicroSungero.Data
 
     public async Task SubmitChanges()
     {
+      this.CheckIfNotDisposed(nameof(SubmitChanges));
+
       // If there are outer sessions then we should submit changes only at the most outer session.
       if (SessionStack.Count > 1)
         return;
@@ -228,6 +239,17 @@ namespace MicroSungero.Data
       {
         deletedEntry.IsDeleted = true;
       }
+    }
+
+    /// <summary>
+    /// Check before executing action if the session has not been disposed.
+    /// If the session is disposed then throws exception.
+    /// </summary>
+    /// <param name="actionName">[Optional] Action name.</param>
+    private void CheckIfNotDisposed(string actionName = default)
+    {
+      if (this.disposed)
+        throw new InvalidOperationException($"Cannot perform action {actionName} because the current session is disposed.");
     }
 
     #endregion
