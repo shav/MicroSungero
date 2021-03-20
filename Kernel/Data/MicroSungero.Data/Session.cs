@@ -47,6 +47,11 @@ namespace MicroSungero.Data
       }
     }
 
+    /// <summary>
+    /// Data access context.
+    /// </summary>
+    private IDbContext dbContext;
+
     #endregion
 
     #region IUnitOfWork
@@ -54,21 +59,25 @@ namespace MicroSungero.Data
     public TRecord Create<TRecord>() where TRecord : class
     {
       var record = Activator.CreateInstance<TRecord>();
-      var persistentObject = record as IPersistentObject;
-      if (persistentObject != null)
-        persistentObject.IsTransient = true;
+      var persistentRecord = record as IPersistentObject;
+      if (persistentRecord != null)
+        persistentRecord.IsTransient = true;
 
       this.Attach(record);
 
       return record;
     }
 
-    public TRecord Attach<TRecord>(TRecord record) where TRecord : class
+    public void Delete<TRecord>(TRecord record) where TRecord : class
     {
-      throw new NotImplementedException();
+      this.dbContext.Remove(record);
+
+      var persistentRecord = record as IPersistentObject;
+      if (persistentRecord != null)
+        persistentRecord.IsDeleted = true;
     }
 
-    public void Delete<TRecord>(TRecord record) where TRecord : class
+    public TRecord Attach<TRecord>(TRecord record) where TRecord : class
     {
       throw new NotImplementedException();
     }
