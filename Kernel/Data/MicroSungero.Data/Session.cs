@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using MicroSungero.Data.Exceptions;
 using MicroSungero.Kernel.Domain;
 using MicroSungero.Kernel.Domain.Entities;
 using MicroSungero.Kernel.Domain.Exceptions;
@@ -53,6 +54,11 @@ namespace MicroSungero.Data
     /// </summary>
     private IDbContext dbContext;
 
+    /// <summary>
+    /// Indicates that the session is submitting changes at this moment.
+    /// </summary>
+    private bool isActiveSubmit = false;
+
     #endregion
 
     #region IUnitOfWork
@@ -97,9 +103,100 @@ namespace MicroSungero.Data
       return entity;
     }
 
-    public Task SubmitChanges()
+    public async Task SubmitChanges()
     {
-      throw new NotImplementedException();
+      // If there are outer sessions then we should submit changes only at the most outer session.
+      if (SessionStack.Count > 1)
+        return;
+
+      this.BeginSubmit();
+      try
+      {
+        var transaction = await this.dbContext.BeginTransactionAsync();
+        await this.SaveChangesAsync();
+        this.dbContext.CommitTransaction(transaction);
+      }
+      catch
+      {
+        this.dbContext.RollbackTransaction();
+        throw;
+      }
+      finally
+      {
+        this.EndSubmit();
+      }
+    }
+
+    #endregion
+
+    #region Methods
+
+    /// <summary>
+    /// Start submitting of tracking changes.
+    /// </summary>
+    private void BeginSubmit()
+    {
+      if (this.isActiveSubmit)
+        throw new SessionException("Session is already submitting.");
+
+      this.isActiveSubmit = true;
+    }
+
+    /// <summary>
+    /// End submitting of tracking changes.
+    /// </summary>
+    private void EndSubmit()
+    {
+      this.isActiveSubmit = false;
+    }
+
+    /// <summary>
+    /// Save tracking entries changes to database within current transaction asynchronously.
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>The number of entries written to the database.</returns>
+    private async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+      int writtenEntriesCount = default;
+      await this.WithTrackPersistentStatus(new Task(() =>
+      {
+        writtenEntriesCount = dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
+      }));
+      return writtenEntriesCount;
+    }
+
+    /// <summary>
+    /// Ececute action with tracking persistent status of persistent objects attached to session.
+    /// </summary>
+    /// <param name="action">Action to execute.</param>
+    private async Task WithTrackPersistentStatus(Task action)
+    {
+      var addedEntries = this.dbContext.GetTrackingEntries<IPersistentObject>()
+        .Where(e => e.State == RecordState.Added || (e.Record as IPersistentObject)?.IsTransient == true)
+        .Select(e => e.Record)
+        .ToArray();
+
+      var changedEntries = this.dbContext.GetTrackingEntries<IPersistentObject>()
+        .Where(e => e.State == RecordState.Modified)
+        .Select(e => e.Record)
+        .ToArray();
+
+      var deletedEntries = this.dbContext.GetTrackingEntries<IPersistentObject>()
+        .Where(e => e.State == RecordState.Deleted || (e.Record as IPersistentObject)?.IsDeleted == true)
+        .Select(e => e.Record)
+        .ToArray();
+
+      action.Start();
+      await action;
+
+      foreach (var addedEntry in addedEntries)
+      {
+        addedEntry.IsTransient = false;
+      }
+      foreach (var deletedEntry in deletedEntries)
+      {
+        deletedEntry.IsDeleted = true;
+      }
     }
 
     #endregion
