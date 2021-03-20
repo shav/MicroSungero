@@ -55,6 +55,11 @@ namespace MicroSungero.Data
     private IDbContext dbContext;
 
     /// <summary>
+    /// Database context factory.
+    /// </summary>
+    private IDbContextFactory dbContextFactory;
+
+    /// <summary>
     /// Indicates that the session is submitting changes at this moment.
     /// </summary>
     private bool isActiveSubmit = false;
@@ -252,13 +257,66 @@ namespace MicroSungero.Data
         throw new InvalidOperationException($"Cannot perform action {actionName} because the current session is disposed.");
     }
 
+    /// <summary>
+    /// Create new database access context.
+    /// </summary>
+    /// <returns>Database access context.</returns>
+    private IDbContext CreateNewDbContext()
+    {
+      if (this.dbContextFactory == null)
+        throw new SessionException($"Cannot create new {nameof(IDbContext)}: {nameof(dbContextFactory)} is not assigned");
+
+      return this.dbContextFactory.Create();
+    }
+
+    /// <summary>
+    /// Set database context implementation.
+    /// </summary>
+    /// <param name="dbContext">Database context.</param>
+    private void SetDatabaseContext(IDbContext dbContext)
+    {
+      if (dbContext != null)
+      {
+        this.dbContext = dbContext;
+      }
+      else
+      {
+        this.dbContext = SessionStack.LastOrDefault()?.dbContext ?? CreateNewDbContext();
+      }
+    }
+
     #endregion
 
     #region Constructors
 
-    public Session()
+    /// <summary>
+    /// Create new session.
+    /// </summary>
+    /// <param name="dbContextFactory">Database context factory.</param>
+    /// <param name="dbContext">Database access context.</param>
+    public Session(IDbContextFactory dbContextFactory, IDbContext dbContext)
     {
+      this.dbContextFactory = dbContextFactory;
+      this.SetDatabaseContext(dbContext);
       SessionStack.Add(this);
+    }
+
+    /// <summary>
+    /// Create new session.
+    /// </summary>
+    /// <param name="dbContextFactory">Database context factory.</param>
+    public Session(IDbContextFactory dbContextFactory)
+      : this(dbContextFactory, null)
+    {
+    }
+
+    /// <summary>
+    /// Create new session.
+    /// </summary>
+    /// <param name="dbContext">Database access context.</param>
+    public Session(IDbContext dbContext)
+      : this(null, dbContext)
+    {
     }
 
     #endregion
