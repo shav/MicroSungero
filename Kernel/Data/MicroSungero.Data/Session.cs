@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using MicroSungero.Kernel.Domain;
 using MicroSungero.Kernel.Domain.Entities;
 
 namespace MicroSungero.Data
@@ -52,7 +53,14 @@ namespace MicroSungero.Data
 
     public TRecord Create<TRecord>() where TRecord : class
     {
-      throw new NotImplementedException();
+      var record = Activator.CreateInstance<TRecord>();
+      var persistentObject = record as IPersistentObject;
+      if (persistentObject != null)
+        persistentObject.IsTransient = true;
+
+      this.Attach(record);
+
+      return record;
     }
 
     public TRecord Attach<TRecord>(TRecord record) where TRecord : class
