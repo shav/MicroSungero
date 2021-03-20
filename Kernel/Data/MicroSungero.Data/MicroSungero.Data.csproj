@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\MicroSungero.Common.Utils\MicroSungero.Common.Utils.csproj" />
+    <ProjectReference Include="..\..\Domain\MicroSungero.Kernel.Domain.Exceptions\MicroSungero.Kernel.Domain.Exceptions.csproj" />
     <ProjectReference Include="..\MicroSungero.Data.Abstractions\MicroSungero.Data.Abstractions.csproj" />
   </ItemGroup>
 

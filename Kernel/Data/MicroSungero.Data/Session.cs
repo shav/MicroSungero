@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MicroSungero.Kernel.Domain;
 using MicroSungero.Kernel.Domain.Entities;
+using MicroSungero.Kernel.Domain.Exceptions;
 
 namespace MicroSungero.Data
 {
@@ -89,7 +90,11 @@ namespace MicroSungero.Data
 
     public TEntity GetById<TEntity>(int id) where TEntity : class, IEntity
     {
-      throw new NotImplementedException();
+      var entity = this.dbContext.GetById<TEntity>(id);
+      if (entity == null)
+        throw new ObjectNotFoundException(typeof(TEntity).FullName, $"Id = {id}");
+
+      return entity;
     }
 
     public Task SubmitChanges()
