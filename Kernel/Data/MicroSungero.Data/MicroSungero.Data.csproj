@@ -4,4 +4,9 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\MicroSungero.Common.Utils\MicroSungero.Common.Utils.csproj" />
+    <ProjectReference Include="..\MicroSungero.Data.Abstractions\MicroSungero.Data.Abstractions.csproj" />
+  </ItemGroup>
+
 </Project>
