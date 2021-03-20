@@ -19,7 +19,6 @@ namespace MicroSungero.Data
   /// the dependency between the work domain and the data allocation or mapping.
   /// See more for details:
   /// https://martinfowler.com/eaaCatalog/repository.html
-  /// https://blog.byndyu.ru/2010/07/2-unit-of-work_10.html
   /// https://rusyasoft.github.io/ddd/2018/05/10/ddd-repository/
   /// https://docs.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/infrastructure-persistence-layer-design
   /// </remarks>
