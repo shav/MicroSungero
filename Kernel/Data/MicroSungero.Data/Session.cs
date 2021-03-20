@@ -86,7 +86,38 @@ namespace MicroSungero.Data
 
     public TRecord Attach<TRecord>(TRecord record) where TRecord : class
     {
-      throw new NotImplementedException();
+      var persistentRecord = record as IPersistentObject;
+      if (persistentRecord == null)
+        return this.dbContext.Attach(record).Record;
+
+      if (persistentRecord.IsDeleted && persistentRecord.IsTransient)
+      {
+        // It is phantom (new entity has been already deleted but hasn't been saved to storage yet)
+        return record;
+      }
+
+      var entry = this.dbContext.GetTrackingEntry(persistentRecord);
+      if (persistentRecord.IsTransient)
+      {
+        if (entry.State == RecordState.Detached)
+        {
+          entry = this.dbContext.Add(persistentRecord);
+          entry.State = RecordState.Added;
+        }
+        else if (entry.State != RecordState.Added && entry.State != RecordState.Modified)
+          throw new SessionException($"Transient object {persistentRecord} cannot be attached to session, because it has already attached to session in {entry.State} state");
+      }
+      else if (persistentRecord.IsDeleted)
+      {
+        entry = this.dbContext.Remove(persistentRecord);
+        entry.State = RecordState.Deleted;
+      }
+      else
+      {
+        entry = this.dbContext.Update(persistentRecord);
+        entry.State = RecordState.Modified;
+      }
+      return (TRecord)entry.Record;
     }
 
     public IQueryable<TRecord> GetAll<TRecord>() where TRecord : class

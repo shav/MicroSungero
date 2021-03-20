@@ -110,6 +110,14 @@ namespace MicroSungero.Data
     /// <returns>Change tracking entry for removed persistent record.</returns>
     IRecordEntry<TRecord> Remove<TRecord>(TRecord record) where TRecord : class;
 
+    /// <summary>
+    /// Start tracking changes of the record by default (initially at unchanged state).
+    /// </summary>
+    /// <typeparam name="TRecord">Type of record.</typeparam>
+    /// <param name="record">Record.</param>
+    /// <returns>Change tracking entry for the record.</returns>
+    IRecordEntry<TRecord> Attach<TRecord>(TRecord record) where TRecord : class;
+
     #endregion
   }
 }
