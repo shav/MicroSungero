@@ -8,7 +8,7 @@ namespace MicroSungero.Data
   /// Repository is used for accessing to data in storage (in database, memory, etc.) like a collection of objects.
   /// Supports CRUD operations.
   /// </summary>
-  /// <typeparam name="T">Type of data objects or records.</typeparam>
+  /// <typeparam name="TRecord">Type of data objects or records.</typeparam>
   /// <remarks>
   /// A repository performs the tasks of an intermediary between the domain model layers and data mapping,
   /// acting in a similar way to a set of domain objects in memory.
@@ -23,20 +23,20 @@ namespace MicroSungero.Data
   /// https://rusyasoft.github.io/ddd/2018/05/10/ddd-repository/
   /// https://docs.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/infrastructure-persistence-layer-design
   /// </remarks>
-  public interface IRepository<T>
+  public interface IRepository<TRecord>
   {
     /// <summary>
     /// Get all records as unclosed query.
     /// </summary>
     /// <returns>All records query.</returns>
-    IQueryable<T> GetAll();
+    IQueryable<TRecord> GetAll();
 
     /// <summary>
     /// Get all records satisfying passed filter as unclosed query.
     /// </summary>
     /// <param name="filter">Criteria for filtering records.</param>
     /// <returns>Query of records satisfying passed filter.</returns>
-    IQueryable<T> GetAll(Expression<Func<T, bool>> filter);
+    IQueryable<TRecord> GetAll(Expression<Func<TRecord, bool>> filter);
 
     /// <summary>
     /// Find single record satisfying passed filter.
@@ -44,25 +44,25 @@ namespace MicroSungero.Data
     /// </summary>
     /// <param name="filter">Criteria for finding record.</param>
     /// <returns></returns>
-    T Get(Expression<Func<T, bool>> filter);
+    TRecord Get(Expression<Func<TRecord, bool>> filter);
 
     /// <summary>
     /// Create new record of particular type.
     /// </summary>
     /// <returns>New unsaved record.</returns>
-    T Create();
+    TRecord Create();
 
     /// <summary>
     /// Update record at the storage.
     /// If record is new and doesn't exist at storage then record will be added to storage.
     /// </summary>
     /// <param name="record">Updating record.</param>
-    void Update(T record);
+    void Update(TRecord record);
 
     /// <summary>
     /// Delete record from the storage.
     /// </summary>
     /// <param name="record">Deleting record.</param>
-    void Delete(T record);
+    void Delete(TRecord record);
   }
 }
