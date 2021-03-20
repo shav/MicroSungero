@@ -84,7 +84,7 @@ namespace MicroSungero.Data
 
     public IQueryable<TRecord> GetAll<TRecord>() where TRecord : class
     {
-      throw new NotImplementedException();
+      return this.dbContext.GetAll<TRecord>();
     }
 
     public TEntity GetById<TEntity>(int id) where TEntity : class, IEntity
