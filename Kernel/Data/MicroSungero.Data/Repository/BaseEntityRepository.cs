@@ -12,9 +12,25 @@ namespace MicroSungero.Data
   {
     #region IEntityRepository
 
-    public TEntity GetById(int id)
+    public virtual TEntity GetById(int id)
     {
-      throw new NotImplementedException();
+      using (var unitOfWork = new UnitOfWorkProxy(this.unitOfWorkContext))
+      {
+        return unitOfWork.GetById<TEntity>(id);
+      }
+    }
+
+    #endregion
+
+    #region Constructors
+
+    /// <summary>
+    /// Create entity repository.
+    /// </summary>
+    /// <param name="unitOfWorkContext">Unit-of-work context.</param>
+    public BaseEntityRepository(IUnitOfWorkContext unitOfWorkContext)
+      : base(unitOfWorkContext)
+    {
     }
 
     #endregion

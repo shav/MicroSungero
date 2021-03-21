@@ -8,7 +8,7 @@
     /// <summary>
     /// Active unit of work.
     /// </summary>
-    IUnitOfWork Current { get; }
+    IUnitOfWork CurrentUnitOfWork { get; }
 
     /// <summary>
     /// Factory that creates new unit-of-work instance.

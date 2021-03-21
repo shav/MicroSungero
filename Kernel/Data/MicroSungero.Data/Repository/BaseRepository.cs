@@ -11,36 +11,70 @@ namespace MicroSungero.Data
   public abstract class BaseRepository<TRecord> : IRepository<TRecord>
     where TRecord : class
   {
+    #region Properties and fields
+
+    /// <summary>
+    /// Unit-of-work context.
+    /// </summary>
+    protected IUnitOfWorkContext unitOfWorkContext;
+
+    #endregion
+
     #region IRepository
 
-    public TRecord Get(Expression<Func<TRecord, bool>> filter)
+    public virtual TRecord Get(Expression<Func<TRecord, bool>> filter)
     {
-      throw new NotImplementedException();
+      return this.GetAll(filter).SingleOrDefault();
     }
 
-    public IQueryable<TRecord> GetAll()
+    public virtual IQueryable<TRecord> GetAll()
     {
-      throw new NotImplementedException();
+      using (var unitOfWork = new UnitOfWorkProxy(this.unitOfWorkContext))
+      {
+        return unitOfWork.GetAll<TRecord>();
+      }
     }
 
-    public IQueryable<TRecord> GetAll(Expression<Func<TRecord, bool>> filter)
+    public virtual IQueryable<TRecord> GetAll(Expression<Func<TRecord, bool>> filter)
     {
-      throw new NotImplementedException();
+      return this.GetAll().Where(filter);
     }
 
-    public TRecord Create()
+    public virtual TRecord Create()
     {
-      throw new NotImplementedException();
+      using (var unitOfWork = new UnitOfWorkProxy(this.unitOfWorkContext))
+      {
+        return unitOfWork.Create<TRecord>();
+      }
     }
 
-    public void Update(TRecord record)
+    public virtual void Update(TRecord record)
     {
-      throw new NotImplementedException();
+      using (var unitOfWork = new UnitOfWorkProxy(this.unitOfWorkContext))
+      {
+        unitOfWork.Attach(record);
+      }
     }
 
-    public void Delete(TRecord record)
+    public virtual void Delete(TRecord record)
     {
-      throw new NotImplementedException();
+      using (var unitOfWork = new UnitOfWorkProxy(this.unitOfWorkContext))
+      {
+        unitOfWork.Delete(record);
+      }
+    }
+
+    #endregion
+
+    #region Constructors
+
+    /// <summary>
+    /// Create repository.
+    /// </summary>
+    /// <param name="unitOfWorkContext">Unit-of-work context.</param>
+    public BaseRepository(IUnitOfWorkContext unitOfWorkContext)
+    {
+      this.unitOfWorkContext = unitOfWorkContext;
     }
 
     #endregion

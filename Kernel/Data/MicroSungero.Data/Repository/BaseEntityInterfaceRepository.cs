@@ -53,5 +53,18 @@ namespace MicroSungero.Data
     }
 
     #endregion
+
+    #region Constructors
+
+    /// <summary>
+    /// Create entity repository.
+    /// </summary>
+    /// <param name="unitOfWorkContext">Unit-of-work context.</param>
+    public BaseEntityInterfaceRepository(IUnitOfWorkContext unitOfWorkContext)
+      : base(unitOfWorkContext)
+    {
+    }
+
+    #endregion
   }
 }
