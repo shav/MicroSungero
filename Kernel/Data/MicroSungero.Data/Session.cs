@@ -116,7 +116,7 @@ namespace MicroSungero.Data
           entry.State = RecordState.Added;
         }
         else if (entry.State != RecordState.Added && entry.State != RecordState.Modified)
-          throw new SessionException($"Transient object {persistentRecord} cannot be attached to session, because it has already attached to session in {entry.State} state");
+          throw new UnitOfWorkException($"Transient object {persistentRecord} cannot be attached to session, because it has already attached to session in {entry.State} state");
       }
       else if (persistentRecord.IsDeleted)
       {
@@ -184,7 +184,7 @@ namespace MicroSungero.Data
     private void BeginSubmit()
     {
       if (this.isActiveSubmit)
-        throw new SessionException("Session is already submitting.");
+        throw new UnitOfWorkException("Session is already submitting.");
 
       this.isActiveSubmit = true;
     }
@@ -264,7 +264,7 @@ namespace MicroSungero.Data
     private IDbContext CreateNewDbContext()
     {
       if (this.dbContextFactory == null)
-        throw new SessionException($"Cannot create new {nameof(IDbContext)}: {nameof(dbContextFactory)} is not assigned");
+        throw new UnitOfWorkException($"Cannot create new {nameof(IDbContext)}: {nameof(dbContextFactory)} is not assigned");
 
       return this.dbContextFactory.Create();
     }

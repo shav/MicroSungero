@@ -5,31 +5,31 @@ namespace MicroSungero.Data.Exceptions
   /// <summary>
   /// An exception occured working with database using the unit-of-work pattern implementation.
   /// </summary>
-  public class SessionException : Exception
+  public class UnitOfWorkException : Exception
   {
     /// <summary>
-    /// Create session exception.
+    /// Create unit-of-work exception.
     /// </summary>
-    public SessionException()
+    public UnitOfWorkException()
     {
     }
 
     /// <summary>
-    /// Create session exception.
+    /// Create unit-of-work exception.
     /// </summary>
     /// <param name="message">Error message.</param>
-    public SessionException(string message)
-        : base(message)
+    public UnitOfWorkException(string message)
+      : base(message)
     {
     }
 
     /// <summary>
-    /// Create session exception.
+    /// Create unit-of-work exception.
     /// </summary>
     /// <param name="message">Error message.</param>
     /// <param name="innerException">Original data access exception.</param>
-    public SessionException(string message, Exception innerException)
-        : base(message, innerException)
+    public UnitOfWorkException(string message, Exception innerException)
+      : base(message, innerException)
     {
     }
   }
