@@ -15,37 +15,37 @@ namespace MicroSungero.Data
   /// Implementation of "unit of work" pattern.
   /// The scope that maintains and tracks changes of a list of objects affected by a business transaction.
   /// </summary>
-  public class Session : IUnitOfWork, IDisposable
+  public class UnitOfWork : IUnitOfWork, IDisposable
   {
     #region Properties and fields
 
     /// <summary>
-    /// Current active session.
+    /// Current active unit-of-work.
     /// </summary>
-    /// <remarks>Returns the most inner session within session stack.</remarks>
-    public static Session Current => SessionStack.LastOrDefault();
+    /// <remarks>Returns the most inner unit-of-work within units stack.</remarks>
+    public static UnitOfWork Current => UnitsOfWorkStack.LastOrDefault();
 
-    private static readonly AsyncLocal<ICollection<Session>> sessionStack = new AsyncLocal<ICollection<Session>>();
+    private static readonly AsyncLocal<ICollection<UnitOfWork>> unitsOfWorkStack = new AsyncLocal<ICollection<UnitOfWork>>();
 
     /// <summary>
-    /// Session stack.
+    /// Units-of-work stack.
     /// </summary>
     /// <remarks>
-    /// Session can be implicitly wrapped by other outer session 
-    /// (beacuse when creating new session you don't know and shouldn't care about there is outer session or not).
-    /// All wrapped sessions stack is treated as single unit of work.
-    /// It means that all changes from inner sessions actually will be submitted only on submitting changes of the most outer session as single transaction,
-    /// but not when calling the method <see cref="SubmitChanges"/> of the inner session.
+    /// Unit-of-work can be implicitly wrapped by other outer unit-of-work 
+    /// (beacuse when creating new unit-of-work you don't know and don't care about there is outer unit-of-work or not).
+    /// All wrapped units stack is treated as single unit of work.
+    /// It means that all changes from inner units-of-work actually will be submitted only on submitting changes of the most outer unit-of-work as single transaction,
+    /// but not when calling the method <see cref="SubmitChanges"/> of the inner unit.
     /// </remarks>
-    private static ICollection<Session> SessionStack
+    private static ICollection<UnitOfWork> UnitsOfWorkStack
     {
       get 
       { 
-        return sessionStack.Value ?? (sessionStack.Value = new Collection<Session>());
+        return unitsOfWorkStack.Value ?? (unitsOfWorkStack.Value = new Collection<UnitOfWork>());
       }
       set 
       { 
-        sessionStack.Value = value;
+        unitsOfWorkStack.Value = value;
       }
     }
 
@@ -60,7 +60,7 @@ namespace MicroSungero.Data
     private IDbContextFactory dbContextFactory;
 
     /// <summary>
-    /// Indicates that the session is submitting changes at this moment.
+    /// Indicates that the unit-of-work is submitting changes at this moment.
     /// </summary>
     private bool isActiveSubmit = false;
 
@@ -116,7 +116,7 @@ namespace MicroSungero.Data
           entry.State = RecordState.Added;
         }
         else if (entry.State != RecordState.Added && entry.State != RecordState.Modified)
-          throw new UnitOfWorkException($"Transient object {persistentRecord} cannot be attached to session, because it has already attached to session in {entry.State} state");
+          throw new UnitOfWorkException($"Transient object {persistentRecord} cannot be attached to the {nameof(UnitOfWork)}, because it has already been attached in {entry.State} state before");
       }
       else if (persistentRecord.IsDeleted)
       {
@@ -152,8 +152,8 @@ namespace MicroSungero.Data
     {
       this.CheckIfNotDisposed(nameof(SubmitChanges));
 
-      // If there are outer sessions then we should submit changes only at the most outer session.
-      if (SessionStack.Count > 1)
+      // If there are outer unit-of-work then we should submit changes only at the most outer unit-of-work.
+      if (UnitsOfWorkStack.Count > 1)
         return;
 
       this.BeginSubmit();
@@ -184,7 +184,7 @@ namespace MicroSungero.Data
     private void BeginSubmit()
     {
       if (this.isActiveSubmit)
-        throw new UnitOfWorkException("Session is already submitting.");
+        throw new UnitOfWorkException($"{nameof(UnitOfWork)} is already submitting.");
 
       this.isActiveSubmit = true;
     }
@@ -213,7 +213,7 @@ namespace MicroSungero.Data
     }
 
     /// <summary>
-    /// Ececute action with tracking persistent status of persistent objects attached to session.
+    /// Ececute action with tracking persistent status of persistent objects attached to unit-of-work.
     /// </summary>
     /// <param name="action">Action to execute.</param>
     private async Task WithTrackPersistentStatus(Task action)
@@ -247,14 +247,14 @@ namespace MicroSungero.Data
     }
 
     /// <summary>
-    /// Check before executing action if the session has not been disposed.
-    /// If the session is disposed then throws exception.
+    /// Check before executing action if the unit-of-work has not been disposed before.
+    /// If the unit-of-work is disposed then throws exception.
     /// </summary>
     /// <param name="actionName">[Optional] Action name.</param>
     private void CheckIfNotDisposed(string actionName = default)
     {
       if (this.disposed)
-        throw new InvalidOperationException($"Cannot perform action {actionName} because the current session is disposed.");
+        throw new InvalidOperationException($"Cannot perform action {actionName} because the current {nameof(UnitOfWork)} is disposed.");
     }
 
     /// <summary>
@@ -281,7 +281,7 @@ namespace MicroSungero.Data
       }
       else
       {
-        this.dbContext = SessionStack.LastOrDefault()?.dbContext ?? CreateNewDbContext();
+        this.dbContext = UnitsOfWorkStack.LastOrDefault()?.dbContext ?? CreateNewDbContext();
       }
     }
 
@@ -290,31 +290,31 @@ namespace MicroSungero.Data
     #region Constructors
 
     /// <summary>
-    /// Create new session.
+    /// Create new unit-of-work.
     /// </summary>
     /// <param name="dbContextFactory">Database context factory.</param>
     /// <param name="dbContext">Database access context.</param>
-    public Session(IDbContextFactory dbContextFactory, IDbContext dbContext)
+    public UnitOfWork(IDbContextFactory dbContextFactory, IDbContext dbContext)
     {
       this.dbContextFactory = dbContextFactory;
       this.SetDatabaseContext(dbContext);
-      SessionStack.Add(this);
+      UnitsOfWorkStack.Add(this);
     }
 
     /// <summary>
-    /// Create new session.
+    /// Create new unit-of-work.
     /// </summary>
     /// <param name="dbContextFactory">Database context factory.</param>
-    public Session(IDbContextFactory dbContextFactory)
+    public UnitOfWork(IDbContextFactory dbContextFactory)
       : this(dbContextFactory, null)
     {
     }
 
     /// <summary>
-    /// Create new session.
+    /// Create new unit-of-work.
     /// </summary>
     /// <param name="dbContext">Database access context.</param>
-    public Session(IDbContext dbContext)
+    public UnitOfWork(IDbContext dbContext)
       : this(null, dbContext)
     {
     }
@@ -338,12 +338,12 @@ namespace MicroSungero.Data
 
       if (disposing)
       {
-        SessionStack.Remove(this);
+        UnitsOfWorkStack.Remove(this);
       }
       this.disposed = true;
     }
 
-    ~Session()
+    ~UnitOfWork()
     {
       this.Dispose(false);
     }
