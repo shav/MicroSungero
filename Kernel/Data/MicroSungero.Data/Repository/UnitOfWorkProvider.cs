@@ -10,7 +10,7 @@ namespace MicroSungero.Data
   /// Proxy class that pretends to be unit-of-work implementation.
   /// It either uses current unit-of-work instance if exists, or create new temporary unit-of-work.
   /// </summary>
-  internal class UnitOfWorkProxy : IUnitOfWork, IDisposable
+  internal class UnitOfWorkProvider : IUnitOfWork, IDisposable
   {
     #region IUnitOfWork
 
@@ -76,7 +76,7 @@ namespace MicroSungero.Data
     private void CheckIfNotDisposed(string actionName = default)
     {
       if (this.disposed)
-        throw new InvalidOperationException($"Cannot perform action {actionName} because the current {nameof(UnitOfWorkProxy)} is disposed.");
+        throw new InvalidOperationException($"Cannot perform action {actionName} because the current {nameof(UnitOfWorkProvider)} is disposed.");
     }
 
     #endregion
@@ -87,7 +87,7 @@ namespace MicroSungero.Data
     /// Create proxy for unit-of-work.
     /// </summary>
     /// <param name="unitOfWorkContext">Unit-of-work context.</param>
-    public UnitOfWorkProxy(IUnitOfWorkContext unitOfWorkContext)
+    public UnitOfWorkProvider(IUnitOfWorkContext unitOfWorkContext)
     {
       if (unitOfWorkContext == null)
         throw new UnitOfWorkException($"Cannot get active {nameof(IUnitOfWork)}: {nameof(unitOfWorkContext)} is not assigned");
@@ -106,7 +106,7 @@ namespace MicroSungero.Data
         this.isCurrent = false;
 
         if (this.unitOfWork == null)
-          throw new UnitOfWorkException($"Cannot use {nameof(UnitOfWorkProxy)}: {nameof(unitOfWorkContext.Factory)} returned null value of {nameof(IUnitOfWork)}");
+          throw new UnitOfWorkException($"Cannot use {nameof(UnitOfWorkProvider)}: {nameof(unitOfWorkContext.Factory)} returned null value of {nameof(IUnitOfWork)}");
       }
     }
 
@@ -135,7 +135,7 @@ namespace MicroSungero.Data
       this.disposed = true;
     }
 
-    ~UnitOfWorkProxy()
+    ~UnitOfWorkProvider()
     {
       this.Dispose(false);
     }

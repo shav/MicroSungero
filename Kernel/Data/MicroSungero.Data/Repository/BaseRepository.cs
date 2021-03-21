@@ -29,7 +29,7 @@ namespace MicroSungero.Data
 
     public virtual IQueryable<TRecord> GetAll()
     {
-      using (var unitOfWork = new UnitOfWorkProxy(this.unitOfWorkContext))
+      using (var unitOfWork = new UnitOfWorkProvider(this.unitOfWorkContext))
       {
         return unitOfWork.GetAll<TRecord>();
       }
@@ -42,7 +42,7 @@ namespace MicroSungero.Data
 
     public virtual TRecord Create()
     {
-      using (var unitOfWork = new UnitOfWorkProxy(this.unitOfWorkContext))
+      using (var unitOfWork = new UnitOfWorkProvider(this.unitOfWorkContext))
       {
         return unitOfWork.Create<TRecord>();
       }
@@ -50,7 +50,7 @@ namespace MicroSungero.Data
 
     public virtual void Update(TRecord record)
     {
-      using (var unitOfWork = new UnitOfWorkProxy(this.unitOfWorkContext))
+      using (var unitOfWork = new UnitOfWorkProvider(this.unitOfWorkContext))
       {
         unitOfWork.Attach(record);
       }
@@ -58,7 +58,7 @@ namespace MicroSungero.Data
 
     public virtual void Delete(TRecord record)
     {
-      using (var unitOfWork = new UnitOfWorkProxy(this.unitOfWorkContext))
+      using (var unitOfWork = new UnitOfWorkProvider(this.unitOfWorkContext))
       {
         unitOfWork.Delete(record);
       }

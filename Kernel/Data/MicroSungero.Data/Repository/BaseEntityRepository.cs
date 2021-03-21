@@ -14,7 +14,7 @@ namespace MicroSungero.Data
 
     public virtual TEntity GetById(int id)
     {
-      using (var unitOfWork = new UnitOfWorkProxy(this.unitOfWorkContext))
+      using (var unitOfWork = new UnitOfWorkProvider(this.unitOfWorkContext))
       {
         return unitOfWork.GetById<TEntity>(id);
       }
