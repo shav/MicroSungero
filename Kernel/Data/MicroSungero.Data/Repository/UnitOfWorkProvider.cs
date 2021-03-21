@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using MicroSungero.Data.Exceptions;
 using MicroSungero.Kernel.Domain.Entities;
 
-namespace MicroSungero.Data
+namespace MicroSungero.Data.Repositories
 {
   /// <summary>
   /// Proxy class that pretends to be unit-of-work implementation.

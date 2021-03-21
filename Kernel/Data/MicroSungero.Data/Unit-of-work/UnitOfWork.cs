@@ -213,7 +213,7 @@ namespace MicroSungero.Data
     }
 
     /// <summary>
-    /// Ececute action with tracking persistent status of persistent objects attached to unit-of-work.
+    /// Execute action with tracking persistent status of persistent objects attached to unit-of-work.
     /// </summary>
     /// <param name="action">Action to execute.</param>
     private async Task WithTrackPersistentStatus(Task action)

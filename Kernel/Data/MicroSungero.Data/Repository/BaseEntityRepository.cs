@@ -1,4 +1,5 @@
 ﻿using System;
+using MicroSungero.Data.Repositories;
 using MicroSungero.Kernel.Domain.Entities;
 
 namespace MicroSungero.Data
