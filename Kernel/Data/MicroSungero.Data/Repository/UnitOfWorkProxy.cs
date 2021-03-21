@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using MicroSungero.Data.Exceptions;
 using MicroSungero.Kernel.Domain.Entities;
 
 namespace MicroSungero.Data
@@ -11,6 +12,46 @@ namespace MicroSungero.Data
   /// </summary>
   internal class UnitOfWorkProxy : IUnitOfWork, IDisposable
   {
+    #region IUnitOfWork
+
+    public TRecord Create<TRecord>() where TRecord : class
+    {
+      this.CheckIfNotDisposed(nameof(Create));
+      return this.unitOfWork.Create<TRecord>();
+    }
+
+    public TRecord Attach<TRecord>(TRecord record) where TRecord : class
+    {
+      this.CheckIfNotDisposed(nameof(Attach));
+      return this.unitOfWork.Attach(record);
+    }
+
+    public void Delete<TRecord>(TRecord record) where TRecord : class
+    {
+      this.CheckIfNotDisposed(nameof(Delete));
+      this.unitOfWork.Delete(record);
+    }
+
+    public IQueryable<TRecord> GetAll<TRecord>() where TRecord : class
+    {
+      this.CheckIfNotDisposed(nameof(GetAll));
+      return this.unitOfWork.GetAll<TRecord>();
+    }
+
+    public TEntity GetById<TEntity>(int id) where TEntity: class, IEntity
+    {
+      this.CheckIfNotDisposed(nameof(GetById));
+      return this.unitOfWork.GetById<TEntity>(id);
+    }
+
+    public Task SubmitChanges()
+    {
+      this.CheckIfNotDisposed(nameof(SubmitChanges));
+      return this.unitOfWork.SubmitChanges();
+    }
+
+    #endregion
+
     #region Properties and fields
 
     /// <summary>
@@ -25,36 +66,17 @@ namespace MicroSungero.Data
 
     #endregion
 
-    #region IUnitOfWork
+    #region Methods
 
-    public TRecord Create<TRecord>() where TRecord : class
+    /// <summary>
+    /// Check before executing action if the unit-of-work proxy has not been disposed before.
+    /// If the unit-of-work proxy is disposed then throws exception.
+    /// </summary>
+    /// <param name="actionName">[Optional] Action name.</param>
+    private void CheckIfNotDisposed(string actionName = default)
     {
-      return this.unitOfWork.Create<TRecord>();
-    }
-
-    public TRecord Attach<TRecord>(TRecord record) where TRecord : class
-    {
-      return this.unitOfWork.Attach(record);
-    }
-
-    public void Delete<TRecord>(TRecord record) where TRecord : class
-    {
-      this.unitOfWork.Delete(record);
-    }
-
-    public IQueryable<TRecord> GetAll<TRecord>() where TRecord : class
-    {
-      return this.unitOfWork.GetAll<TRecord>();
-    }
-
-    public TEntity GetById<TEntity>(int id) where TEntity: class, IEntity
-    {
-      return this.unitOfWork.GetById<TEntity>(id);
-    }
-
-    public Task SubmitChanges()
-    {
-      return this.unitOfWork.SubmitChanges();
+      if (this.disposed)
+        throw new InvalidOperationException($"Cannot perform action {actionName} because the current {nameof(UnitOfWorkProxy)} is disposed.");
     }
 
     #endregion
@@ -67,6 +89,9 @@ namespace MicroSungero.Data
     /// <param name="unitOfWorkContext">Unit-of-work context.</param>
     public UnitOfWorkProxy(IUnitOfWorkContext unitOfWorkContext)
     {
+      if (unitOfWorkContext == null)
+        throw new UnitOfWorkException($"Cannot get active {nameof(IUnitOfWork)}: {nameof(unitOfWorkContext)} is not assigned");
+
       if (unitOfWorkContext.CurrentUnitOfWork != null)
       {
         this.unitOfWork = unitOfWorkContext.CurrentUnitOfWork;
@@ -74,8 +99,14 @@ namespace MicroSungero.Data
       }
       else
       {
+        if (unitOfWorkContext.Factory == null)
+          throw new UnitOfWorkException($"Cannot create new {nameof(IUnitOfWork)}: {nameof(unitOfWorkContext.Factory)} is not assigned");
+
         this.unitOfWork = unitOfWorkContext.Factory.Create();
         this.isCurrent = false;
+
+        if (this.unitOfWork == null)
+          throw new UnitOfWorkException($"Cannot use {nameof(UnitOfWorkProxy)}: {nameof(unitOfWorkContext.Factory)} returned null value of {nameof(IUnitOfWork)}");
       }
     }
 
