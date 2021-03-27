@@ -9,5 +9,11 @@
     /// Create new unit-of-work instance.
     /// </summary>
     IUnitOfWork Create();
+
+    /// <summary>
+    /// Create new unit-of-work instance.
+    /// </summary>
+    /// <param name="dbContext">Database context.</param>
+    IUnitOfWork Create(IDbContext dbContext);
   }
 }

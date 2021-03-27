@@ -28,7 +28,7 @@ namespace MicroSungero.Data
     private static readonly AsyncLocal<ICollection<UnitOfWork>> unitsOfWorkStack = new AsyncLocal<ICollection<UnitOfWork>>();
 
     /// <summary>
-    /// Units-of-work stack.
+    /// Units-of-work stack (from outer to inner units).
     /// </summary>
     /// <remarks>
     /// Unit-of-work can be implicitly wrapped by other outer unit-of-work 
@@ -177,6 +177,15 @@ namespace MicroSungero.Data
     #endregion
 
     #region Methods
+
+    /// <summary>
+    /// Get wrapped units-of-work stack.
+    /// </summary>
+    /// <returns>Units-of-work stack (from outer to inner units).</returns>
+    public static IEnumerable<IUnitOfWork> GetUnitsOfWorkStack()
+    {
+      return UnitOfWork.UnitsOfWorkStack.ToList();
+    }
 
     /// <summary>
     /// Start submitting of tracking changes.

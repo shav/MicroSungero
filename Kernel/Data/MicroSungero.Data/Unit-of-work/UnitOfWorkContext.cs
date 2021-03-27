@@ -1,4 +1,6 @@
-﻿namespace MicroSungero.Data
+﻿using System.Collections.Generic;
+
+namespace MicroSungero.Data
 {
   /// <summary>
   /// Provider that gives access to unit-of-work context.
@@ -8,6 +10,8 @@
     #region IUnitOfWorkContext
 
     public IUnitOfWork CurrentUnitOfWork => UnitOfWork.Current;
+
+    public IEnumerable<IUnitOfWork> UnitsOfWorkStack => UnitOfWork.GetUnitsOfWorkStack();
 
     public IUnitOfWorkFactory Factory => this.unitOfWorkFactory;
 

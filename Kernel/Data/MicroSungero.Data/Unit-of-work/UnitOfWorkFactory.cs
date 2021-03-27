@@ -9,7 +9,15 @@
 
     public IUnitOfWork Create()
     {
+      if (UnitOfWorkScope.Current != null)
+        this.Create(UnitOfWorkScope.Current.DbContext);
+
       return new UnitOfWork(this.dbContextFactory);
+    }
+
+    public IUnitOfWork Create(IDbContext dbContext)
+    {
+      return new UnitOfWork(dbContext);
     }
 
     #endregion

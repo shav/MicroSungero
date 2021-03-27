@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using MicroSungero.Kernel.Domain.Entities;
 
@@ -13,7 +14,7 @@ namespace MicroSungero.Data
   /// https://martinfowler.com/eaaCatalog/unitOfWork.html
   /// https://blog.byndyu.ru/2010/07/2-unit-of-work_10.html
   /// </remarks>
-  public interface IUnitOfWork
+  public interface IUnitOfWork: IDisposable
   {
     /// <summary>
     /// Create new unsaved record.
