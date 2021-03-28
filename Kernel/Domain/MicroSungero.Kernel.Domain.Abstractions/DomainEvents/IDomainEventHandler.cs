@@ -13,11 +13,10 @@ namespace MicroSungero.Kernel.Domain.DomainEvents
     where TEvent : IDomainEvent
   {
     /// <summary>
-    /// Handle the domain event/
+    /// Handle the domain event.
     /// </summary>
     /// <param name="domainEvent">Domain event.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>Task handling the domain event.</returns>
     Task Handle(TEvent domainEvent, CancellationToken cancellationToken);
   }
 }

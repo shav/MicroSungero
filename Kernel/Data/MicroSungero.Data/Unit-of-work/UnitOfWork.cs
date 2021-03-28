@@ -60,6 +60,11 @@ namespace MicroSungero.Data
     private IDbContextFactory dbContextFactory;
 
     /// <summary>
+    /// Service that manages entity lifetime.
+    /// </summary>
+    private IEntityLifetimeService entityLifetimeService;
+
+    /// <summary>
     /// Indicates that the unit-of-work is submitting changes at this moment.
     /// </summary>
     private bool isActiveSubmit = false;
@@ -77,6 +82,9 @@ namespace MicroSungero.Data
       if (persistentRecord != null)
         persistentRecord.IsTransient = true;
 
+      if (record is IEntity entity)
+        this.entityLifetimeService.OnEntityCreated(entity);
+
       this.Attach(record);
 
       return record;
@@ -85,6 +93,9 @@ namespace MicroSungero.Data
     public void Delete<TRecord>(TRecord record) where TRecord : class
     {
       this.CheckIfNotDisposed(nameof(Delete));
+
+      if (record is IEntity entity)
+        this.entityLifetimeService.OnBeforeDeleteEntity(entity);
 
       this.dbContext.Remove(record);
 
@@ -237,10 +248,17 @@ namespace MicroSungero.Data
         .Select(e => e.Record)
         .ToArray();
 
+      var addedOrChangedEntries = addedEntries.Union(changedEntries).Distinct().ToArray();
+
       var deletedEntries = this.dbContext.GetTrackingEntries<IPersistentObject>()
         .Where(e => e.State == RecordState.Deleted || (e.Record as IPersistentObject)?.IsDeleted == true)
         .Select(e => e.Record)
         .ToArray();
+
+      foreach (var entity in addedOrChangedEntries.OfType<IEntity>())
+      {
+        this.entityLifetimeService.OnBeforeSaveEntity(entity);
+      }
 
       action.Start();
       await action;
@@ -252,6 +270,15 @@ namespace MicroSungero.Data
       foreach (var deletedEntry in deletedEntries)
       {
         deletedEntry.IsDeleted = true;
+      }
+
+      foreach (var entity in addedOrChangedEntries.OfType<IEntity>())
+      {
+        this.entityLifetimeService.OnEntitySaved(entity);
+      }
+      foreach (var entity in deletedEntries.OfType<IEntity>())
+      {
+        this.entityLifetimeService.OnEntityDeleted(entity);
       }
     }
 
@@ -303,9 +330,11 @@ namespace MicroSungero.Data
     /// </summary>
     /// <param name="dbContextFactory">Database context factory.</param>
     /// <param name="dbContext">Database access context.</param>
-    public UnitOfWork(IDbContextFactory dbContextFactory, IDbContext dbContext)
+    /// <param name="entityLifetimeService">Service that manages entity lifetime.</param>
+    public UnitOfWork(IDbContextFactory dbContextFactory, IDbContext dbContext, IEntityLifetimeService entityLifetimeService)
     {
       this.dbContextFactory = dbContextFactory;
+      this.entityLifetimeService = entityLifetimeService;
       this.SetDatabaseContext(dbContext);
       UnitsOfWorkStack.Add(this);
     }
@@ -314,8 +343,9 @@ namespace MicroSungero.Data
     /// Create new unit-of-work.
     /// </summary>
     /// <param name="dbContextFactory">Database context factory.</param>
-    public UnitOfWork(IDbContextFactory dbContextFactory)
-      : this(dbContextFactory, null)
+    /// <param name="entityLifetimeService">Service that manages entity lifetime.</param>
+    public UnitOfWork(IDbContextFactory dbContextFactory, IEntityLifetimeService entityLifetimeService)
+      : this(dbContextFactory, null, entityLifetimeService)
     {
     }
 
@@ -323,8 +353,9 @@ namespace MicroSungero.Data
     /// Create new unit-of-work.
     /// </summary>
     /// <param name="dbContext">Database access context.</param>
-    public UnitOfWork(IDbContext dbContext)
-      : this(null, dbContext)
+    /// <param name="entityLifetimeService">Service that manages entity lifetime.</param>
+    public UnitOfWork(IDbContext dbContext, IEntityLifetimeService entityLifetimeService)
+      : this(null, dbContext, entityLifetimeService)
     {
     }
 
