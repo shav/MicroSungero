@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
 namespace MicroSungero.WebAPI
 {
   /// <summary>
-  /// Extension methods to add swagger page to service.
+  /// Extension methods for swagger configuration on service.
   /// </summary>
-  public static class SwaggerAppBuilderExtensions
+  public static class SwaggerConfigureExtensions
   {
     /// <summary>
     /// Add swagger page to service.
@@ -33,6 +34,19 @@ namespace MicroSungero.WebAPI
       app.UseStaticFiles("/swagger");
 
       return app;
+    }
+
+    /// <summary>
+    /// Enable swagger documentation for service.
+    /// </summary>
+    /// <param name="services">All services collection.</param>
+    /// <param name="serviceName">Service name.</param>
+    public static void UseSwaggerGenerator(this IServiceCollection services, string serviceName)
+    {
+      services.AddSwaggerGen(c =>
+      {
+        c.SwaggerDoc("v1", new OpenApiInfo { Title = $"{serviceName} Service API", Version = "v1" });
+      });
     }
   }
 }
