@@ -14,6 +14,15 @@ namespace MicroSungero.Data.EntityFramework
   /// </summary>
   public abstract class BaseDbContext : DbContext, IDbContext
   {
+    #region Constants
+
+    /// <summary>
+    /// Default transaction isolation level.
+    /// </summary>
+    public const IsolationLevel DEFAULT_TRANSACTION_ISOLATION_LEVEL = IsolationLevel.ReadCommitted;
+
+    #endregion
+
     #region IDbContext
 
     public ITransaction CurrentTransaction { get; private set; }
@@ -25,7 +34,7 @@ namespace MicroSungero.Data.EntityFramework
       if (this.CurrentTransaction != null)
         return null;
 
-      return this.CurrentTransaction = new DbTransaction(await this.Database.BeginTransactionAsync(IsolationLevel.ReadCommitted));
+      return this.CurrentTransaction = new DbTransaction(await this.Database.BeginTransactionAsync(this.TransactionIsolationLevel));
     }
 
     public void CommitTransaction(ITransaction transaction)
@@ -133,15 +142,31 @@ namespace MicroSungero.Data.EntityFramework
 
     #endregion
 
+    #region Properties and fields
+
+    /// <summary>
+    /// Database connection settings.
+    /// </summary>
+    public IDatabaseConnectionSettings ConnectionSettings { get; private set; }
+
+    /// <summary>
+    /// Transaction isolation level.
+    /// </summary>
+    public IsolationLevel TransactionIsolationLevel => this.ConnectionSettings?.TransactionIsolationLevel ?? DEFAULT_TRANSACTION_ISOLATION_LEVEL;
+
+    #endregion
+
     #region Constructors
 
     /// <summary>
     /// Create database context.
     /// </summary>
     /// <param name="options">Options.</param>
-    public BaseDbContext(DbContextOptions options)
+    /// <param name="connectionSettings">Database connection settings.</param>
+    public BaseDbContext(DbContextOptions options, IDatabaseConnectionSettings connectionSettings = null)
       : base(options)
     {
+      this.ConnectionSettings = connectionSettings;
     }
 
     #endregion
