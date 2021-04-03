@@ -23,6 +23,11 @@ namespace MicroSungero.Kernel.Domain.Entities
 
     public int Id { get; set; }
 
+    public bool ReferencesTo(IEntity entity)
+    {
+      return entity != null && entity.Id == this.Id && entity.TypeGuid == this.TypeGuid;
+    }
+
     #endregion
 
     #region Properties and fields
@@ -37,16 +42,6 @@ namespace MicroSungero.Kernel.Domain.Entities
     #endregion
 
     #region Methods
-
-    /// <summary>
-    /// Check if the identifier references to the passed entity.
-    /// </summary>
-    /// <param name="entity">Entity.</param>
-    /// <returns>True if the identifier references to the passed entity, else False.</returns>
-    public bool ReferencesTo(IEntity entity)
-    {
-      return entity != null && entity.Id == this.Id && entity.TypeGuid == this.TypeGuid;
-    }
 
     /// <summary>
     /// Check if the identifier is null or empty (references to unknown entity).

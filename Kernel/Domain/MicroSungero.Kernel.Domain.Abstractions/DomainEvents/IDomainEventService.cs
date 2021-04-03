@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using MicroSungero.Kernel.Domain.Entities;
 
 namespace MicroSungero.Kernel.Domain.DomainEvents
 {
@@ -8,10 +9,16 @@ namespace MicroSungero.Kernel.Domain.DomainEvents
   public interface IDomainEventService
   {
     /// <summary>
-    /// Notify subscribers that the domain event has just happened.
+    /// Notify subscribers that the domain event just happened.
     /// </summary>
     /// <param name="domainEvent">Domain event.</param>
-    /// <returns></returns>
     Task Publish(IDomainEvent domainEvent);
+
+    /// <summary>
+    /// Notify subscribers that the entity domain event happened.
+    /// </summary>
+    /// <param name="domainEvent">Domain event.</param>
+    /// <param name="onTransactionCommit">Indicates that event should be raised only after transaction successfull completed.</param>
+    Task Publish(IEntityDomainEvent domainEvent, bool onTransactionCommit = false);
   }
 }

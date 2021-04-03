@@ -57,12 +57,17 @@ namespace MicroSungero.Data
     /// <summary>
     /// Database context factory.
     /// </summary>
-    private IDbContextFactory dbContextFactory;
+    private readonly IDbContextFactory dbContextFactory;
 
     /// <summary>
     /// Service that manages entity lifetime.
     /// </summary>
-    private IEntityLifetimeService entityLifetimeService;
+    private readonly IEntityLifetimeService entityLifetimeService;
+
+    /// <summary>
+    /// Transactional domain events scope.
+    /// </summary>
+    private readonly IEntityDomainEventContext domainEventScope;
 
     /// <summary>
     /// Indicates that the unit-of-work is submitting changes at this moment.
@@ -170,9 +175,12 @@ namespace MicroSungero.Data
       this.BeginSubmit();
       try
       {
-        var transaction = await this.dbContext.BeginTransactionAsync();
-        await this.SaveChangesAsync();
-        this.dbContext.CommitTransaction(transaction);
+        await this.WithRaiseDomainEventsOnTransactionCommit(new Task(async () =>
+        {
+          var transaction = await this.dbContext.BeginTransactionAsync();
+          await this.SaveChangesAsync();
+          this.dbContext.CommitTransaction(transaction);
+        }));
       }
       catch
       {
@@ -238,22 +246,10 @@ namespace MicroSungero.Data
     /// <param name="action">Action to execute.</param>
     private async Task WithTrackPersistentStatus(Task action)
     {
-      var addedEntries = this.dbContext.GetTrackingEntries<IPersistentObject>()
-        .Where(e => e.State == RecordState.Added || (e.Record as IPersistentObject)?.IsTransient == true)
-        .Select(e => e.Record)
-        .ToArray();
-
-      var changedEntries = this.dbContext.GetTrackingEntries<IPersistentObject>()
-        .Where(e => e.State == RecordState.Modified)
-        .Select(e => e.Record)
-        .ToArray();
-
+      var addedEntries = this.GetAddedEntries();
+      var changedEntries = this.GetChangedEntries();
       var addedOrChangedEntries = addedEntries.Union(changedEntries).Distinct().ToArray();
-
-      var deletedEntries = this.dbContext.GetTrackingEntries<IPersistentObject>()
-        .Where(e => e.State == RecordState.Deleted || (e.Record as IPersistentObject)?.IsDeleted == true)
-        .Select(e => e.Record)
-        .ToArray();
+      var deletedEntries = this.GetDeletedEntries();
 
       foreach (var entity in addedOrChangedEntries.OfType<IEntity>())
       {
@@ -280,6 +276,59 @@ namespace MicroSungero.Data
       {
         this.entityLifetimeService.OnEntityDeleted(entity);
       }
+    }
+
+    /// <summary>
+    /// Execute action with raise domain events for entities tracked by unit-of-work on transaction successfully completed.
+    /// </summary>
+    /// <param name="action">Action to execute.</param>
+    private async Task WithRaiseDomainEventsOnTransactionCommit(Task action)
+    {
+      var trackingEntries = this.GetAddedEntries().Union(this.GetChangedEntries()).Union(this.GetDeletedEntries()).Distinct().ToArray();
+
+      action.Start();
+      await action;
+      
+      foreach (var entity in trackingEntries.OfType<IEntity>())
+      {
+        this.domainEventScope.Current?.RaiseEvents(entity);
+      }
+    }
+
+    /// <summary>
+    /// Get all new added records tracked by unit-of-work.
+    /// </summary>
+    /// <returns>New records.</returns>
+    private IEnumerable<IPersistentObject> GetAddedEntries()
+    {
+      return this.dbContext.GetTrackingEntries<IPersistentObject>()
+        .Where(e => e.State == RecordState.Added || (e.Record as IPersistentObject)?.IsTransient == true)
+        .Select(e => e.Record)
+        .ToArray();
+    }
+
+    /// <summary>
+    /// Get all changed records tracked by unit-of-work.
+    /// </summary>
+    /// <returns>Changed records.</returns>
+    private IEnumerable<IPersistentObject> GetChangedEntries()
+    {
+      return this.dbContext.GetTrackingEntries<IPersistentObject>()
+        .Where(e => e.State == RecordState.Modified)
+        .Select(e => e.Record)
+        .ToArray();
+    }
+
+    /// <summary>
+    /// Get all deleted records tracked by unit-of-work.
+    /// </summary>
+    /// <returns>Deleted records.</returns>
+    private IEnumerable<IPersistentObject> GetDeletedEntries()
+    {
+      return this.dbContext.GetTrackingEntries<IPersistentObject>()
+        .Where(e => e.State == RecordState.Deleted || (e.Record as IPersistentObject)?.IsDeleted == true)
+        .Select(e => e.Record)
+        .ToArray();
     }
 
     /// <summary>
@@ -331,10 +380,12 @@ namespace MicroSungero.Data
     /// <param name="dbContextFactory">Database context factory.</param>
     /// <param name="dbContext">Database access context.</param>
     /// <param name="entityLifetimeService">Service that manages entity lifetime.</param>
-    public UnitOfWork(IDbContextFactory dbContextFactory, IDbContext dbContext, IEntityLifetimeService entityLifetimeService)
+    /// <param name="domainEventScope">Transactional domain events scope.</param>
+    public UnitOfWork(IDbContextFactory dbContextFactory, IDbContext dbContext, IEntityLifetimeService entityLifetimeService, IEntityDomainEventContext domainEventScope)
     {
       this.dbContextFactory = dbContextFactory;
       this.entityLifetimeService = entityLifetimeService;
+      this.domainEventScope = domainEventScope;
       this.SetDatabaseContext(dbContext);
       UnitsOfWorkStack.Add(this);
     }
@@ -344,8 +395,9 @@ namespace MicroSungero.Data
     /// </summary>
     /// <param name="dbContextFactory">Database context factory.</param>
     /// <param name="entityLifetimeService">Service that manages entity lifetime.</param>
-    public UnitOfWork(IDbContextFactory dbContextFactory, IEntityLifetimeService entityLifetimeService)
-      : this(dbContextFactory, null, entityLifetimeService)
+    /// <param name="domainEventScope">Transactional domain events scope.</param>
+    public UnitOfWork(IDbContextFactory dbContextFactory, IEntityLifetimeService entityLifetimeService, IEntityDomainEventContext domainEventScope)
+      : this(dbContextFactory, null, entityLifetimeService, domainEventScope)
     {
     }
 
@@ -354,8 +406,9 @@ namespace MicroSungero.Data
     /// </summary>
     /// <param name="dbContext">Database access context.</param>
     /// <param name="entityLifetimeService">Service that manages entity lifetime.</param>
-    public UnitOfWork(IDbContext dbContext, IEntityLifetimeService entityLifetimeService)
-      : this(null, dbContext, entityLifetimeService)
+    /// <param name="domainEventScope">Transactional domain events scope.</param>
+    public UnitOfWork(IDbContext dbContext, IEntityLifetimeService entityLifetimeService, IEntityDomainEventContext domainEventScope)
+      : this(null, dbContext, entityLifetimeService, domainEventScope)
     {
     }
 

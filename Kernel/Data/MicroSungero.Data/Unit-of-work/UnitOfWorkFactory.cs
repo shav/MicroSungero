@@ -1,4 +1,5 @@
 ﻿using MicroSungero.Kernel.Domain;
+using MicroSungero.Kernel.Domain.Entities;
 
 namespace MicroSungero.Data
 {
@@ -14,12 +15,12 @@ namespace MicroSungero.Data
       if (UnitOfWorkScope.Current != null)
         this.Create(UnitOfWorkScope.Current.DbContext);
 
-      return new UnitOfWork(this.dbContextFactory, this.entityLifetimeService);
+      return new UnitOfWork(this.dbContextFactory, this.entityLifetimeService, this.domainEventScope);
     }
 
     public IUnitOfWork Create(IDbContext dbContext)
     {
-      return new UnitOfWork(dbContext, this.entityLifetimeService);
+      return new UnitOfWork(dbContext, this.entityLifetimeService, this.domainEventScope);
     }
 
     #endregion
@@ -36,6 +37,11 @@ namespace MicroSungero.Data
     /// </summary>
     private IEntityLifetimeService entityLifetimeService;
 
+    /// <summary>
+    /// Transactional domain events scope.
+    /// </summary>
+    private readonly IEntityDomainEventContext domainEventScope;
+
     #endregion
 
     #region Constructors
@@ -45,10 +51,12 @@ namespace MicroSungero.Data
     /// </summary>
     /// <param name="dbContextFactory">Database context factory.</param>
     /// <param name="entityLifetimeService">Service that manages entity lifetime.</param>
-    public UnitOfWorkFactory(IDbContextFactory dbContextFactory, IEntityLifetimeService entityLifetimeService)
+    /// <param name="domainEventScope">Transactional domain events scope.</param>
+    public UnitOfWorkFactory(IDbContextFactory dbContextFactory, IEntityLifetimeService entityLifetimeService, IEntityDomainEventContext domainEventScope)
     {
       this.dbContextFactory = dbContextFactory;
       this.entityLifetimeService = entityLifetimeService;
+      this.domainEventScope = domainEventScope;
     }
 
     #endregion
