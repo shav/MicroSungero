@@ -36,5 +36,16 @@ namespace MicroSungero.Kernel.Domain.DomainEvents
     public ICollection<Exception> Errors { get; } = new Collection<Exception>();
 
     #endregion
+
+    #region Constructors
+
+    public DomainEvent()
+    {
+      this.EventId = Guid.NewGuid();
+      this.EventType = this.GetType().Name;
+      this.Timestamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
+    }
+
+    #endregion
   }
 }
