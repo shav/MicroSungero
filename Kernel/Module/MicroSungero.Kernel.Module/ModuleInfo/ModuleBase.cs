@@ -1,4 +1,4 @@
-﻿namespace MicroSungero.Kernel.ModuleInfo
+﻿namespace MicroSungero.ModuleInfo
 {
   /// <summary>
   /// Base implementation of module info.

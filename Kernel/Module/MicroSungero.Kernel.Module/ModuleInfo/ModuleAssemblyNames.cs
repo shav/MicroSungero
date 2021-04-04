@@ -1,24 +1,24 @@
-﻿namespace MicroSungero.Kernel.ModuleInfo
+﻿namespace MicroSungero.ModuleInfo
 {
   /// <summary>
-  /// Module assemblies names info.
+  /// Module assemblies names.
   /// </summary>
   public class ModuleAssemblyNames
   {
     /// <summary>
-    /// Domain assembly name.
+    /// Domain assemblies names.
     /// </summary>
-    public string Domain => $"{this.moduleName}.{nameof(Domain)}";
+    public DomainAssemblyNames Domain { get; }
 
     /// <summary>
-    /// API assembly name.
+    /// API assemblies names.
     /// </summary>
-    public string API => $"{this.moduleName}.{nameof(API)}";
+    public ApiAssemblyNames API { get; }
 
     /// <summary>
-    /// Infrastructure assembly name.
+    /// Data assemblies names.
     /// </summary>
-    public string Infrastructure => $"{this.moduleName}.{nameof(Infrastructure)}";
+    public DataAssemblyNames Data { get; }
 
     /// <summary>
     /// Module name.
@@ -26,12 +26,15 @@
     private readonly string moduleName;
 
     /// <summary>
-    /// Create module assemblies names info.
+    /// Create module assemblies names.
     /// </summary>
     /// <param name="moduleName">Module name.</param>
     public ModuleAssemblyNames(string moduleName)
     {
       this.moduleName = moduleName;
+      this.API = new ApiAssemblyNames(this.moduleName);
+      this.Domain = new DomainAssemblyNames(this.moduleName);
+      this.Data = new DataAssemblyNames(this.moduleName);
     }
   }
 }

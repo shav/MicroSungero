@@ -1,4 +1,4 @@
-﻿using MicroSungero.Kernel.ModuleInfo;
+﻿using MicroSungero.ModuleInfo;
 
 namespace MicroSungero.Kernel
 {

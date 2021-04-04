@@ -41,7 +41,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroSungero.Kernel.Domain.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroSungero.Data.EntityFramework", "Kernel\Data\MicroSungero.Data.EntityFramework\MicroSungero.Data.EntityFramework.csproj", "{42CD6105-1AB3-41D5-AC82-AFA8219891CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroSungero.WebAPI", "MicroSungero.WebAPI\MicroSungero.WebAPI.csproj", "{B0AA101D-2C8C-45F3-931D-BBFD2F7F1F57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroSungero.WebAPI", "MicroSungero.WebAPI\MicroSungero.WebAPI.csproj", "{B0AA101D-2C8C-45F3-931D-BBFD2F7F1F57}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
