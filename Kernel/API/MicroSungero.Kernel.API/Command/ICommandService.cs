@@ -3,7 +3,7 @@
 namespace MicroSungero.Kernel.API
 {
   /// <summary>
-  /// A service than executes commands via registered command handlers at any point of application.
+  /// A service that executes commands via registered command handlers at any point of application.
   /// </summary>
   public interface ICommandService
   {
