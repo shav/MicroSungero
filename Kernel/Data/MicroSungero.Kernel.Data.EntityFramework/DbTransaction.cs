@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace MicroSungero.Data.EntityFramework
+namespace MicroSungero.Kernel.Data.EntityFramework
 {
   /// <summary>
   /// Database transaction implementation through EntityFramework.

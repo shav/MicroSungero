@@ -1,4 +1,4 @@
-﻿namespace MicroSungero.Data.EntityFramework
+﻿namespace MicroSungero.Kernel.Data.EntityFramework
 {
   /// <summary>
   /// Factory that creates base database context instance.

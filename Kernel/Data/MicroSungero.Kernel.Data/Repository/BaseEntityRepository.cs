@@ -1,8 +1,8 @@
 ﻿using System;
-using MicroSungero.Data.Repositories;
+using MicroSungero.Kernel.Data.Repositories;
 using MicroSungero.Kernel.Domain.Entities;
 
-namespace MicroSungero.Data
+namespace MicroSungero.Kernel.Data
 {
   /// <summary>
   /// Base implementation of repository that is used for accessing to entities at storage.

@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using MicroSungero.Common.Utils;
 using MicroSungero.Kernel.Domain.Entities;
 
-namespace MicroSungero.Data
+namespace MicroSungero.Kernel.Data
 {
   /// <summary>
   /// Base implementation of repository that is used for accessing at storage to entities implementing specified interface.

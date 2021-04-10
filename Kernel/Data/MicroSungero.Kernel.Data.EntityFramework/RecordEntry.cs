@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace MicroSungero.Data.EntityFramework
+namespace MicroSungero.Kernel.Data.EntityFramework
 {
   /// <summary>
   /// Change tracking entry for the persistent record.

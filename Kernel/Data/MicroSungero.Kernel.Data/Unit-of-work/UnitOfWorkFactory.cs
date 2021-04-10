@@ -1,7 +1,7 @@
 ﻿using MicroSungero.Kernel.Domain;
 using MicroSungero.Kernel.Domain.Entities;
 
-namespace MicroSungero.Data
+namespace MicroSungero.Kernel.Data
 {
   /// <summary>
   /// Factory that creates new unit-of-work instance.

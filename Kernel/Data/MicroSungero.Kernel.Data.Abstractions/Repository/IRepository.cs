@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace MicroSungero.Data
+namespace MicroSungero.Kernel.Data
 {
   /// <summary>
   /// Repository is used for accessing to data in storage (in database, memory, etc.) like a collection of objects.

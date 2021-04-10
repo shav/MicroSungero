@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using MicroSungero.Data.Exceptions;
+using MicroSungero.Kernel.Data.Exceptions;
 
-namespace MicroSungero.Data
+namespace MicroSungero.Kernel.Data
 {
   /// <summary>
   /// Scope that wraps all units-of-work created inside the scope.

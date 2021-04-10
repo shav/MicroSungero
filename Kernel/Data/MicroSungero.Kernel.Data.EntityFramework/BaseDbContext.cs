@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MicroSungero.Kernel.Domain.Entities;
 
-namespace MicroSungero.Data.EntityFramework
+namespace MicroSungero.Kernel.Data.EntityFramework
 {
   /// <summary>
   /// Base database access context implementation through EntityFramework.

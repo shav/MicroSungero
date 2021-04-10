@@ -4,12 +4,12 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using MicroSungero.Data.Exceptions;
+using MicroSungero.Kernel.Data.Exceptions;
 using MicroSungero.Kernel.Domain;
 using MicroSungero.Kernel.Domain.Entities;
 using MicroSungero.Kernel.Domain.Exceptions;
 
-namespace MicroSungero.Data
+namespace MicroSungero.Kernel.Data
 {
   /// <summary>
   /// Implementation of "unit of work" pattern.

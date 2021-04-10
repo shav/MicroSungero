@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace MicroSungero.Data
+namespace MicroSungero.Kernel.Data
 {
   /// <summary>
   /// Database connection settings.

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-using MicroSungero.Data.Repositories;
+using MicroSungero.Kernel.Data.Repositories;
 
-namespace MicroSungero.Data
+namespace MicroSungero.Kernel.Data
 {
   /// <summary>
   /// Base repository implementation.

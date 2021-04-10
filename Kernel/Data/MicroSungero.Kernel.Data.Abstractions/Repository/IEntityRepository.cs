@@ -1,6 +1,6 @@
 ﻿using MicroSungero.Kernel.Domain.Entities;
 
-namespace MicroSungero.Data
+namespace MicroSungero.Kernel.Data
 {
   /// <summary>
   /// Repository that is used for accessing to entities at storage.

@@ -2,8 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MicroSungero.Data;
-using MicroSungero.Data.EntityFramework;
+using MicroSungero.Kernel.Data;
+using MicroSungero.Kernel.Data.EntityFramework;
 using MicroSungero.Kernel.Domain.Entities;
 
 namespace MicroSungero.WebAPI

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MicroSungero.Data
+namespace MicroSungero.Kernel.Data
 {
   /// <summary>
   /// Provider that gives access to unit-of-work context.

@@ -1,4 +1,4 @@
-﻿namespace MicroSungero.Data
+﻿namespace MicroSungero.Kernel.Data
 {
   /// <summary>
   /// Change tracking state of the peristent object record.

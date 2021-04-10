@@ -1,4 +1,4 @@
-﻿namespace MicroSungero.Data
+﻿namespace MicroSungero.Kernel.Data
 {
   /// <summary>
   /// Factory that creates database context instance.

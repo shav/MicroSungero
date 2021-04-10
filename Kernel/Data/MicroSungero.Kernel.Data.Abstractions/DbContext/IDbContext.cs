@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MicroSungero.Kernel.Domain.Entities;
 
-namespace MicroSungero.Data
+namespace MicroSungero.Kernel.Data
 {
   /// <summary>
   /// Database access context.

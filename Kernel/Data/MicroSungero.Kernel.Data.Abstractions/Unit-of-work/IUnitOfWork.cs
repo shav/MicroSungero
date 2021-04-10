@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MicroSungero.Kernel.Domain.Entities;
 
-namespace MicroSungero.Data
+namespace MicroSungero.Kernel.Data
 {
   /// <summary>
   /// Unit of work is the scope that maintains a list of objects affected by a business transaction 

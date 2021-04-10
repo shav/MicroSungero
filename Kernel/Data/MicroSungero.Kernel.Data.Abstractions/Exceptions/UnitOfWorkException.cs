@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MicroSungero.Data.Exceptions
+namespace MicroSungero.Kernel.Data.Exceptions
 {
   /// <summary>
   /// An exception occured working with database using the unit-of-work pattern implementation.
