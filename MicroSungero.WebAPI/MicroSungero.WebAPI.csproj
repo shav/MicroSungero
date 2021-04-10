@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -12,8 +12,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="9.4.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Common\MicroSungero.Common.Utils\MicroSungero.Common.Utils.csproj" />
+    <ProjectReference Include="..\Kernel\API\MicroSungero.Kernel.API.Behaviors\MicroSungero.Kernel.API.Behaviors.csproj" />
+    <ProjectReference Include="..\Kernel\API\MicroSungero.Kernel.API.Services\MicroSungero.Kernel.API.Services.csproj" />
+    <ProjectReference Include="..\Kernel\API\MicroSungero.Kernel.API\MicroSungero.Kernel.API.csproj" />
     <ProjectReference Include="..\Kernel\Data\MicroSungero.Data.Abstractions\MicroSungero.Data.Abstractions.csproj" />
     <ProjectReference Include="..\Kernel\Data\MicroSungero.Data.EntityFramework\MicroSungero.Data.EntityFramework.csproj" />
+    <ProjectReference Include="..\Kernel\Domain\MicroSungero.Kernel.Domain.Entities\MicroSungero.Kernel.Domain.Entities.csproj" />
+    <ProjectReference Include="..\Kernel\Domain\MicroSungero.Kernel.Domain.Services\MicroSungero.Kernel.Domain.Services.csproj" />
+    <ProjectReference Include="..\Kernel\Module\MicroSungero.Kernel.Module\MicroSungero.Kernel.Module.csproj" />
   </ItemGroup>
 
 </Project>

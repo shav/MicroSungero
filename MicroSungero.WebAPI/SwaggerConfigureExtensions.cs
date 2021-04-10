@@ -39,7 +39,7 @@ namespace MicroSungero.WebAPI
     /// <summary>
     /// Enable swagger documentation for service.
     /// </summary>
-    /// <param name="services">All services collection.</param>
+    /// <param name="services">Dependency container.</param>
     /// <param name="serviceName">Service name.</param>
     public static void UseSwaggerGenerator(this IServiceCollection services, string serviceName)
     {

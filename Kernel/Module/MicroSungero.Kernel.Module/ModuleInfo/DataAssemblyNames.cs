@@ -5,6 +5,8 @@
   /// </summary>
   public class DataAssemblyNames
   {
+    #region Properties and fields
+
     /// <summary>
     /// Abstractions assembly name.
     /// </summary>
@@ -29,6 +31,19 @@
     /// </summary>
     private readonly string moduleName;
 
+    #endregion
+
+    #region Object
+
+    public override string ToString()
+    {
+      return (string)this;
+    }
+
+    #endregion
+
+    #region Constructors
+
     /// <summary>
     /// Create data assemblies names info.
     /// </summary>
@@ -37,5 +52,7 @@
     {
       this.moduleName = moduleName;
     }
+
+    #endregion
   }
 }

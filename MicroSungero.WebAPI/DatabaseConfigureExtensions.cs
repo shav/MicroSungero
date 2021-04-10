@@ -17,7 +17,7 @@ namespace MicroSungero.WebAPI
     /// Configure database services.
     /// </summary>
     /// <typeparam name="TDbContext">Type of database context.</typeparam>
-    /// <param name="services">Service container.</param>
+    /// <param name="services">Dependency container.</param>
     /// <param name="configuration">App configuration.</param>
     public static void ConfigureDatabase<TDbContext>(this IServiceCollection services, IConfiguration configuration) where TDbContext : BaseDbContext
     {
@@ -34,7 +34,7 @@ namespace MicroSungero.WebAPI
     /// </summary>
     /// <typeparam name="TEntity">Type of entities.</typeparam>
     /// <typeparam name="TRepository">Type of repository.</typeparam>
-    /// <param name="services">Service container.</param>
+    /// <param name="services">Dependency container.</param>
     public static void ConfigureRepository<TEntity, TRepository>(this IServiceCollection services)
       where TEntity : IEntity
       where TRepository : class, IRepository<TEntity>, IEntityRepository<TEntity>

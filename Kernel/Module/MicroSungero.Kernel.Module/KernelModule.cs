@@ -10,7 +10,7 @@ namespace MicroSungero.Kernel
     /// <summary>
     /// Module name.
     /// </summary>
-    public const string Name = "Kernel";
+    public const string Name = "MicroSungero.Kernel";
 
     /// <summary>
     /// Module assemblies names.

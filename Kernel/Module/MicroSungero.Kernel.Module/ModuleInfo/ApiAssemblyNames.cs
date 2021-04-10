@@ -5,6 +5,8 @@
   /// </summary>
   public class ApiAssemblyNames
   {
+    #region Properties and fields
+
     /// <summary>
     /// Behaviors assembly name.
     /// </summary>
@@ -29,6 +31,19 @@
     /// </summary>
     private readonly string moduleName;
 
+    #endregion
+
+    #region Object
+
+    public override string ToString()
+    {
+      return (string)this;
+    }
+
+    #endregion
+
+    #region Constructors
+
     /// <summary>
     /// Create API assemblies names info.
     /// </summary>
@@ -37,5 +52,7 @@
     {
       this.moduleName = moduleName;
     }
+
+    #endregion
   }
 }
