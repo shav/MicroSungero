@@ -31,15 +31,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroSungero.Kernel.API.Beh
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{23642B4F-A9E4-4F09-99B5-B71335BAAC53}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroSungero.Data", "Kernel\Data\MicroSungero.Data\MicroSungero.Data.csproj", "{9782790F-D581-4975-83F9-61EC1EE83983}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroSungero.Kernel.Data", "Kernel\Data\MicroSungero.Kernel.Data\MicroSungero.Kernel.Data.csproj", "{9782790F-D581-4975-83F9-61EC1EE83983}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroSungero.Data.Abstractions", "Kernel\Data\MicroSungero.Data.Abstractions\MicroSungero.Data.Abstractions.csproj", "{00397558-63A6-4AB3-87D8-2E4FB34FCEE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroSungero.Kernel.Data.Abstractions", "Kernel\Data\MicroSungero.Kernel.Data.Abstractions\MicroSungero.Kernel.Data.Abstractions.csproj", "{00397558-63A6-4AB3-87D8-2E4FB34FCEE1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroSungero.Kernel.Domain.Exceptions", "Kernel\Domain\MicroSungero.Kernel.Domain.Exceptions\MicroSungero.Kernel.Domain.Exceptions.csproj", "{08F9FCFB-3948-49E3-93B6-593F9C6AC817}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroSungero.Kernel.Domain.Entities", "Kernel\Domain\MicroSungero.Kernel.Domain.Entities\MicroSungero.Kernel.Domain.Entities.csproj", "{44E6D8ED-7C2E-4685-A4B2-F99CFE6B2A51}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroSungero.Data.EntityFramework", "Kernel\Data\MicroSungero.Data.EntityFramework\MicroSungero.Data.EntityFramework.csproj", "{42CD6105-1AB3-41D5-AC82-AFA8219891CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroSungero.Kernel.Data.EntityFramework", "Kernel\Data\MicroSungero.Kernel.Data.EntityFramework\MicroSungero.Kernel.Data.EntityFramework.csproj", "{42CD6105-1AB3-41D5-AC82-AFA8219891CA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroSungero.WebAPI", "MicroSungero.WebAPI\MicroSungero.WebAPI.csproj", "{B0AA101D-2C8C-45F3-931D-BBFD2F7F1F57}"
 EndProject

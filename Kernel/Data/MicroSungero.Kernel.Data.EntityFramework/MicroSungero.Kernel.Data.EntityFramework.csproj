@@ -13,9 +13,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\MicroSungero.Common.Utils\MicroSungero.Common.Utils.csproj" />
-    <ProjectReference Include="..\..\Domain\MicroSungero.Kernel.Domain.Exceptions\MicroSungero.Kernel.Domain.Exceptions.csproj" />
-    <ProjectReference Include="..\MicroSungero.Data.Abstractions\MicroSungero.Data.Abstractions.csproj" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.12" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MicroSungero.Kernel.Data.Abstractions\MicroSungero.Kernel.Data.Abstractions.csproj" />
+  </ItemGroup>
+  
 </Project>
