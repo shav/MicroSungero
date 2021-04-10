@@ -22,8 +22,8 @@
     <ProjectReference Include="..\Kernel\API\MicroSungero.Kernel.API.Behaviors\MicroSungero.Kernel.API.Behaviors.csproj" />
     <ProjectReference Include="..\Kernel\API\MicroSungero.Kernel.API.Services\MicroSungero.Kernel.API.Services.csproj" />
     <ProjectReference Include="..\Kernel\API\MicroSungero.Kernel.API\MicroSungero.Kernel.API.csproj" />
-    <ProjectReference Include="..\Kernel\Data\MicroSungero.Data.EntityFramework\MicroSungero.Kernel.Data.EntityFramework.csproj" />
     <ProjectReference Include="..\Kernel\Data\MicroSungero.Kernel.Data.Abstractions\MicroSungero.Kernel.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\Kernel\Data\MicroSungero.Kernel.Data.EntityFramework\MicroSungero.Kernel.Data.EntityFramework.csproj" />
     <ProjectReference Include="..\Kernel\Data\MicroSungero.Kernel.Data\MicroSungero.Kernel.Data.csproj" />
     <ProjectReference Include="..\Kernel\Domain\MicroSungero.Kernel.Domain.Entities\MicroSungero.Kernel.Domain.Entities.csproj" />
     <ProjectReference Include="..\Kernel\Domain\MicroSungero.Kernel.Domain.Services\MicroSungero.Kernel.Domain.Services.csproj" />
