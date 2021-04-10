@@ -3,7 +3,7 @@
 namespace MicroSungero.Kernel.API
 {
   /// <summary>
-  /// A service than executes queries via registered query handlers at any point of application.
+  /// A service that executes queries via registered query handlers at any point of application.
   /// </summary>
   public interface IQueryService
   {
