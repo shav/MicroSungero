@@ -28,6 +28,7 @@
     <ProjectReference Include="..\Kernel\Domain\MicroSungero.Kernel.Domain.Entities\MicroSungero.Kernel.Domain.Entities.csproj" />
     <ProjectReference Include="..\Kernel\Domain\MicroSungero.Kernel.Domain.Services\MicroSungero.Kernel.Domain.Services.csproj" />
     <ProjectReference Include="..\Kernel\Module\MicroSungero.Kernel.Module\MicroSungero.Kernel.Module.csproj" />
+    <ProjectReference Include="..\System\Module\MicroSungero.System.Module\MicroSungero.System.Module.csproj" />
   </ItemGroup>
 
 </Project>
