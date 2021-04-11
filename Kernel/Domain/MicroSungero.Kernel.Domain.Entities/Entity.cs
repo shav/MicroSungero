@@ -5,7 +5,7 @@ namespace MicroSungero.Kernel.Domain.Entities
   /// <summary>
   /// Base entity implementation.
   /// </summary>
-  public abstract class Entity : IEntity, IInternalEntity
+  public abstract class Entity : IEntity, IInternalEntity, IPersistentObject
   {
     #region Constants
 
@@ -26,7 +26,15 @@ namespace MicroSungero.Kernel.Domain.Entities
       private set { } // HACK: Setter is used by ORM
     }
 
-    public virtual string DisplayValue => this.ToString();
+    public virtual string DisplayValue => $"{{{nameof(this.TypeGuid)}: {this.TypeGuid}, {nameof(Id)}: {this.Id}}}";
+
+    #endregion
+
+    #region IPersistentObject
+
+    bool IPersistentObject.IsTransient { get; set; }
+
+    bool IPersistentObject.IsDeleted { get; set; }
 
     #endregion
 
@@ -51,7 +59,7 @@ namespace MicroSungero.Kernel.Domain.Entities
 
     public override string ToString()
     {
-      return $"{{{nameof(this.TypeGuid)}: {this.TypeGuid}, {nameof(Id)}: {this.Id}}}";
+      return this.DisplayValue;
     }
 
     #endregion
