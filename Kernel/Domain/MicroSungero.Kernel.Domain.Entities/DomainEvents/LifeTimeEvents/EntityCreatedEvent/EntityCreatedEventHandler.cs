@@ -26,7 +26,7 @@ namespace MicroSungero.Kernel.Domain.Entities
 
     public override async Task Handle(EntityCreatedEvent<TEntity> domainEvent, CancellationToken cancellationToken)
     {
-      await this.HandleEvent(domainEvent, cancellationToken);
+      await this.HandleEventCore(domainEvent, cancellationToken);
 
       try
       {
@@ -41,10 +41,10 @@ namespace MicroSungero.Kernel.Domain.Entities
     #endregion
 
     /// <summary>
-    /// Handle event raised after entity was created.
+    /// Core logic of handling event raised after entity was created.
     /// </summary>
     /// <param name="domainEvent">Event raised after entity was created.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
-    protected abstract Task HandleEvent(EntityCreatedEvent<TEntity> domainEvent, CancellationToken cancellationToken);
+    protected abstract Task HandleEventCore(EntityCreatedEvent<TEntity> domainEvent, CancellationToken cancellationToken);
   }
 }

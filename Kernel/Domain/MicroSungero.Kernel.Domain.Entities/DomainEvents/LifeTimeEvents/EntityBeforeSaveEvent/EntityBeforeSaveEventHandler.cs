@@ -36,16 +36,16 @@ namespace MicroSungero.Kernel.Domain.Entities
         return;
       }
       
-      await this.HandleEvent(domainEvent, cancellationToken);
+      await this.HandleEventCore(domainEvent, cancellationToken);
     }
 
     #endregion
 
     /// <summary>
-    /// Handle event raised before saving entity.
+    /// Core logic of handling event raised before saving entity.
     /// </summary>
     /// <param name="domainEvent">Event raised before saving entity.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
-    protected abstract Task HandleEvent(EntityBeforeSaveEvent<TEntity> domainEvent, CancellationToken cancellationToken);
+    protected abstract Task HandleEventCore(EntityBeforeSaveEvent<TEntity> domainEvent, CancellationToken cancellationToken);
   }
 }

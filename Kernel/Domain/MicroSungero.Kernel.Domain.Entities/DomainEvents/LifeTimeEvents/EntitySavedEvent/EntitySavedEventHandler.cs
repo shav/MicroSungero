@@ -25,16 +25,16 @@ namespace MicroSungero.Kernel.Domain.Entities
 
     public override async Task Handle(EntitySavedEvent<TEntity> domainEvent, CancellationToken cancellationToken)
     {
-      await this.HandleEvent(domainEvent, cancellationToken);
+      await this.HandleEventCore(domainEvent, cancellationToken);
     }
 
     #endregion
 
     /// <summary>
-    /// Handle event raised after entity was saved.
+    /// Core logic of handling event raised after entity was saved.
     /// </summary>
     /// <param name="domainEvent">Event raised after entity was saved.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
-    protected abstract Task HandleEvent(EntitySavedEvent<TEntity> domainEvent, CancellationToken cancellationToken);
+    protected abstract Task HandleEventCore(EntitySavedEvent<TEntity> domainEvent, CancellationToken cancellationToken);
   }
 }
