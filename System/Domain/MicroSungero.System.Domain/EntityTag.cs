@@ -20,7 +20,8 @@ namespace MicroSungero.System.Domain
 
     protected override IEnumerable<object> GetEqualityComponents()
     {
-      return new object[] { this.Name, this.Color };
+      yield return this.Name;
+      yield return this.Color;
     }
 
     #endregion
