@@ -32,6 +32,7 @@ namespace MicroSungero.WebAPI
       services.AddTransient<IEntityDomainEventContext, EntityDomainEventContext>();
       services.AddTransient<IUnitOfWorkContext, UnitOfWorkContext>();
       services.AddTransient<IUnitOfWorkFactory, UnitOfWorkFactory>();
+      services.AddTransient<IUnitOfWorkScope, UnitOfWorkScope>();
       services.AddTransient<IEntityLifetimeService, EntityLifetimeService>();
 
       services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CommandValidationBehaviour<,>));

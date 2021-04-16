@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace MicroSungero.Kernel.Data
 {
@@ -6,7 +7,7 @@ namespace MicroSungero.Kernel.Data
   /// Scope that wraps all units-of-work created inside the scope.
   /// Provides common database context for whole units-of-work stack wrapped by the scope.
   /// </summary>
-  public interface IUnitOfWorkScope
+  public interface IUnitOfWorkScope: IDisposable
   {
     /// <summary>
     /// Common database context that is used by all units-of-work wrapped into this scope.
