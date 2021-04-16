@@ -5,9 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using MicroSungero.Kernel.Data;
 using MicroSungero.Kernel.Data.EntityFramework;
 using MicroSungero.Kernel.Domain.Entities;
-using MicroSungero.WebAPI.Settings;
 
-namespace MicroSungero.WebAPI
+namespace MicroSungero.WebAPI.Configuration
 {
   /// <summary>
   /// Database configure extensions.
@@ -26,7 +25,7 @@ namespace MicroSungero.WebAPI
     {
       services.AddTransient<IDbContextFactory, TDbContextFactory>(provider =>
       {
-        var databaseSettings = configuration.Get<AppSettings>()?.DatabaseSettings;
+        var databaseSettings = configuration.GetAppSettings()?.DatabaseSettings;
         var connectionSettings = new DatabaseConnectionSettings
         {
           ConnectionString = databaseSettings.ConnectionString,
