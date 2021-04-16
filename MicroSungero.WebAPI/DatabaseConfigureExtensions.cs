@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MicroSungero.Kernel.Data;
 using MicroSungero.Kernel.Data.EntityFramework;
 using MicroSungero.Kernel.Domain.Entities;
+using MicroSungero.WebAPI.Settings;
 
 namespace MicroSungero.WebAPI
 {
@@ -19,13 +20,23 @@ namespace MicroSungero.WebAPI
     /// <typeparam name="TDbContext">Type of database context.</typeparam>
     /// <param name="services">Dependency container.</param>
     /// <param name="configuration">App configuration.</param>
-    public static void ConfigureDatabase<TDbContext>(this IServiceCollection services, IConfiguration configuration) where TDbContext : BaseDbContext
+    public static void ConfigureDatabase<TDbContext, TDbContextFactory>(this IServiceCollection services, IConfiguration configuration)
+      where TDbContext : BaseDbContext
+      where TDbContextFactory: class, IDbContextFactory
     {
-      services.AddTransient<IDbContext>(provider =>
+      services.AddTransient<IDbContextFactory, TDbContextFactory>(provider =>
       {
+        var databaseSettings = configuration.Get<AppSettings>()?.DatabaseSettings;
+        var connectionSettings = new DatabaseConnectionSettings
+        {
+          ConnectionString = databaseSettings.ConnectionString,
+          TransactionIsolationLevel = databaseSettings?.TransactionIsolationLevel
+        };
+
         var optionsBuilder = new DbContextOptionsBuilder<TDbContext>();
-        optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-        return (TDbContext)Activator.CreateInstance(typeof(TDbContext), optionsBuilder.Options);
+        optionsBuilder.UseSqlServer(databaseSettings.ConnectionString);
+
+        return (TDbContextFactory)Activator.CreateInstance(typeof(TDbContextFactory), optionsBuilder.Options, connectionSettings);
       });
     }
 
