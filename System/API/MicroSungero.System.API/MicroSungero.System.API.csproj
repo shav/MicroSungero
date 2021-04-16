@@ -12,4 +12,12 @@
     <OutputPath>..\..\..\bin\</OutputPath>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Domain\MicroSungero.System.Domain\MicroSungero.System.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
