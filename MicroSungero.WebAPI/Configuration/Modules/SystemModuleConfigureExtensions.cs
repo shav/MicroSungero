@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using MicroSungero.Common.Utils;
 
-namespace MicroSungero.WebAPI
+namespace MicroSungero.WebAPI.Configuration
 {
   /// <summary>
   /// Extension methods for System module configuration.

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
-namespace MicroSungero.WebAPI
+namespace MicroSungero.WebAPI.Configuration
 {
   /// <summary>
   /// Extension methods for swagger configuration on service.

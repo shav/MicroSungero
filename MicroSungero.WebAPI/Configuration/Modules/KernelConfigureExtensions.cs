@@ -12,7 +12,7 @@ using MicroSungero.Kernel.Domain.DomainEvents;
 using MicroSungero.Kernel.Domain.Entities;
 using MicroSungero.Kernel.Domain.Services;
 
-namespace MicroSungero.WebAPI
+namespace MicroSungero.WebAPI.Configuration
 {
   /// <summary>
   /// Extension methods for MicroSungero kernel configuration.

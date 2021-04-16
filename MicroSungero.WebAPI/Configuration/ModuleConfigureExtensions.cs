@@ -4,7 +4,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace MicroSungero.WebAPI
+namespace MicroSungero.WebAPI.Configuration
 {
   /// <summary>
   /// Extension methods for module configuration.
