@@ -5,7 +5,7 @@ namespace MicroSungero.System.Domain
   /// <summary>
   /// Color.
   /// </summary>
-  public class Color: Enumeration, IColor
+  public class Color: Enumeration
   {
     #region Enumeration items
 
@@ -20,12 +20,6 @@ namespace MicroSungero.System.Domain
     public static readonly Color Blue = new Color(nameof(Blue));
 
     public static readonly Color Purple = new Color(nameof(Purple));
-
-    #endregion
-
-    #region IColor
-
-    string IColor.Name => this.Value;
 
     #endregion
 

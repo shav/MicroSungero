@@ -12,7 +12,7 @@ namespace MicroSungero.System.Domain
 
     public string Name { get; private set; }
 
-    public IColor Color { get; private set; }
+    public Color Color { get; private set; }
 
     #endregion
 
@@ -33,10 +33,17 @@ namespace MicroSungero.System.Domain
     /// </summary>
     /// <param name="name">Tag name.</param>
     /// <param name="color">Tag color.</param>
-    public EntityTag(string name, IColor color)
+    public EntityTag(string name, Color color)
     {
       this.Name = name;
       this.Color = color;
+    }
+
+    /// <summary>
+    /// Create empty entity tag.
+    /// </summary>
+    public EntityTag()
+    {
     }
 
     #endregion

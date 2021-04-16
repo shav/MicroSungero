@@ -13,6 +13,6 @@
     /// <summary>
     /// Tag color.
     /// </summary>
-    IColor Color { get; }
+    Color Color { get; }
   }
 }

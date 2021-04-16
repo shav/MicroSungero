@@ -9,7 +9,7 @@ namespace MicroSungero.Kernel.Domain
   /// An named item of complete ended set of items.
   /// Also used as a container for the set of named enumerated items.
   /// </summary>
-  public class Enumeration : IEnumeration, IComparable
+  public class Enumeration : IComparable
   {
     #region IEnumeration
 
@@ -41,14 +41,14 @@ namespace MicroSungero.Kernel.Domain
     }
 
     /// <summary>
-    /// Create enumeration item from its display value.
+    /// Parse enumeration item from display value.
     /// </summary>
     /// <typeparam name="T">Type of enumeration.</typeparam>
-    /// <param name="value">Enumeration item value.</param>
+    /// <param name="displayValue">Enumeration item value.</param>
     /// <returns>Enumeration item.</returns>
-    public static T FromValue<T>(string value) where T : Enumeration
+    public static T Parse<T>(string displayValue) where T : Enumeration
     {
-      return Parse<T>(value, e => e.Value == value);
+      return Parse<T>(displayValue, e => e.Value == displayValue);
     }
 
     /// <summary>
