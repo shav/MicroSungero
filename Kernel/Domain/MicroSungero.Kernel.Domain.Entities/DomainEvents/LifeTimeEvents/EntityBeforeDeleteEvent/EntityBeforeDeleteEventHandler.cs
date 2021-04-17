@@ -26,6 +26,8 @@ namespace MicroSungero.Kernel.Domain.Entities
 
     public override async Task Handle(EntityBeforeDeleteEvent<TEntity> domainEvent, CancellationToken cancellationToken)
     {
+      await this.HandleEventCore(domainEvent, cancellationToken);
+
       try
       {
         this.validator.Validate<IDeleteEntityValidator<TEntity>>(domainEvent.Entity);
@@ -35,8 +37,6 @@ namespace MicroSungero.Kernel.Domain.Entities
         domainEvent.Errors.Add(validationError);
         return;
       }
-      
-      await this.HandleEventCore(domainEvent, cancellationToken);
     }
 
     #endregion
