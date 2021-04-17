@@ -11,7 +11,7 @@ namespace MicroSungero.Kernel.API
   /// https://en.wikipedia.org/wiki/Command%E2%80%93query_separation
   /// https://microservices.io/patterns/data/cqrs.html
   /// </remarks>
-  public interface ICommand<out TResult> : IRequest<TResult>
+  public interface ICommand<out TResult> : IBaseCommand, IRequest<TResult>
   {
   }
 
@@ -23,7 +23,14 @@ namespace MicroSungero.Kernel.API
   /// https://en.wikipedia.org/wiki/Command%E2%80%93query_separation
   /// https://microservices.io/patterns/data/cqrs.html
   /// </remarks>
-  public interface ICommand : ICommand<Unit>, IRequest
+  public interface ICommand : ICommand<Unit>, IBaseCommand, IRequest
+  {
+  }
+
+  /// <summary>
+  /// Interface that marks any command whatever result type it has.
+  /// </summary>
+  public interface IBaseCommand
   {
   }
 }

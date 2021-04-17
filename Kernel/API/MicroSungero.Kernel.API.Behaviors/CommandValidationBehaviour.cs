@@ -1,5 +1,8 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using FluentValidation;
 using MediatR;
 using MicroSungero.Kernel.API.Validation;
 
@@ -22,16 +25,18 @@ namespace MicroSungero.Kernel.API.Behaviors
     /// Create command validation behavior.
     /// </summary>
     /// <param name="validationService">Command validation service.</param>
-    public CommandValidationBehaviour(ICommandValidationService validationService)
+    /// <param name="validators">Command validators.</param>
+    public CommandValidationBehaviour(ICommandValidationService validationService, IEnumerable<IValidator<TCommand>> validators)
     {
       this.validationService = validationService;
+      this.validationService.AddValidators(validators.OfType<ICommandValidator<TCommand>>().ToArray());
     }
 
     #region IPipelineBehavior
 
     public async Task<TResult> Handle(TCommand command, CancellationToken cancellationToken, RequestHandlerDelegate<TResult> next)
     {
-      await this.validationService.ValidateAsync<TCommand, TResult>(command, cancellationToken);
+      await this.validationService.ValidateAsync(command, cancellationToken);
       return await next();
     }
 

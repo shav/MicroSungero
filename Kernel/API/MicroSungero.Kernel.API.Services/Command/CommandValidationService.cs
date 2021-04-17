@@ -14,22 +14,20 @@ namespace MicroSungero.Kernel.API.Services
     /// <summary>
     /// All registered command validators for all command types.
     /// </summary>
-    private readonly IEnumerable<ICommandValidator> validators;
+    private readonly List<ICommandValidator> validators = new List<ICommandValidator>();
 
     /// <summary>
     /// Create command validation service.
     /// </summary>
-    /// <param name="validators">All registered command validators for command.</param>
-    public CommandValidationService(IEnumerable<ICommandValidator> validators)
+    public CommandValidationService()
     {
-      this.validators = validators.ToArray();
     }
 
     #region ICommandValidationService
 
-    public async Task ValidateAsync<TCommand, TResult>(TCommand command, CancellationToken cancellationToken) where TCommand : ICommand<TResult>
+    public async Task ValidateAsync<TCommand>(TCommand command, CancellationToken cancellationToken) where TCommand : IBaseCommand
     {
-      var commandValidators = this.validators.OfType<ICommandValidator<TCommand, TResult>>();
+      var commandValidators = this.validators.OfType<ICommandValidator<TCommand>>();
       if (commandValidators.Any())
       {
         var validationResults = await Task.WhenAll(commandValidators.Select(v => v.ValidateAsync(command, false, cancellationToken)));
@@ -37,6 +35,15 @@ namespace MicroSungero.Kernel.API.Services
 
         if (errors.Count != 0)
           throw new Kernel.Domain.Exceptions.PropertyValidationException(errors);
+      }
+    }
+
+    public void AddValidators<TCommand>(IEnumerable<ICommandValidator<TCommand>> validators) where TCommand : IBaseCommand
+    {
+      foreach (var validator in validators)
+      {
+        if (!this.validators.Contains(validator))
+          this.validators.Add(validator);
       }
     }
 
