@@ -123,25 +123,25 @@ namespace MicroSungero.Kernel.Data
         return record;
       }
 
-      var entry = this.dbContext.GetTrackingEntry(persistentRecord);
+      var entry = this.dbContext.GetTrackingEntry(record);
       if (persistentRecord.IsTransient)
       {
         if (entry.State == RecordState.Detached)
         {
-          entry = this.dbContext.Add(persistentRecord);
+          entry = this.dbContext.Add(record);
           entry.State = RecordState.Added;
         }
         else if (entry.State != RecordState.Added && entry.State != RecordState.Modified)
-          throw new UnitOfWorkException($"Transient object {persistentRecord} cannot be attached to the {nameof(UnitOfWork)}, because it has already been attached in {entry.State} state before");
+          throw new UnitOfWorkException($"Transient object {record} cannot be attached to the {nameof(UnitOfWork)}, because it has already been attached in {entry.State} state before");
       }
       else if (persistentRecord.IsDeleted)
       {
-        entry = this.dbContext.Remove(persistentRecord);
+        entry = this.dbContext.Remove(record);
         entry.State = RecordState.Deleted;
       }
       else
       {
-        entry = this.dbContext.Update(persistentRecord);
+        entry = this.dbContext.Update(record);
         entry.State = RecordState.Modified;
       }
       return (TRecord)entry.Record;
@@ -175,12 +175,12 @@ namespace MicroSungero.Kernel.Data
       this.BeginSubmit();
       try
       {
-        await this.WithRaiseDomainEventsOnTransactionCommit(new Task(async () =>
+        await this.WithRaiseDomainEventsOnTransactionCommit(async () =>
         {
           var transaction = await this.dbContext.BeginTransactionAsync();
           await this.SaveChangesAsync();
           this.dbContext.CommitTransaction(transaction);
-        }));
+        });
       }
       catch
       {
@@ -233,10 +233,10 @@ namespace MicroSungero.Kernel.Data
     private async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
       int writtenEntriesCount = default;
-      await this.WithTrackPersistentStatus(new Task(() =>
+      await this.WithTrackPersistentStatus(async () =>
       {
-        writtenEntriesCount = dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
-      }));
+        writtenEntriesCount = await dbContext.SaveChangesAsync(cancellationToken);
+      });
       return writtenEntriesCount;
     }
 
@@ -244,7 +244,7 @@ namespace MicroSungero.Kernel.Data
     /// Execute action with tracking persistent status of persistent objects attached to unit-of-work.
     /// </summary>
     /// <param name="action">Action to execute.</param>
-    private async Task WithTrackPersistentStatus(Task action)
+    private async Task WithTrackPersistentStatus(Func<Task> action)
     {
       var addedEntries = this.GetAddedEntries();
       var changedEntries = this.GetChangedEntries();
@@ -256,8 +256,7 @@ namespace MicroSungero.Kernel.Data
         this.entityLifetimeService.OnBeforeSaveEntity(entity);
       }
 
-      action.Start();
-      await action;
+      await action();
 
       foreach (var addedEntry in addedEntries)
       {
@@ -282,12 +281,11 @@ namespace MicroSungero.Kernel.Data
     /// Execute action with raise domain events for entities tracked by unit-of-work on transaction successfully completed.
     /// </summary>
     /// <param name="action">Action to execute.</param>
-    private async Task WithRaiseDomainEventsOnTransactionCommit(Task action)
+    private async Task WithRaiseDomainEventsOnTransactionCommit(Func<Task> action)
     {
       var trackingEntries = this.GetAddedEntries().Union(this.GetChangedEntries()).Union(this.GetDeletedEntries()).Distinct().ToArray();
 
-      action.Start();
-      await action;
+      await action();
       
       foreach (var entity in trackingEntries.OfType<IEntity>())
       {
