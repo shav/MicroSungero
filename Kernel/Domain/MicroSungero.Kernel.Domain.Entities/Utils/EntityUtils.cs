@@ -17,6 +17,7 @@ namespace MicroSungero.Kernel.Domain.Entities
     {
       var entityInterfaces = entity.GetType().GetInterfaces()
         .Where(@interface => typeof(IEntity).IsAssignableFrom(@interface))
+        .Where(@interface => !Equals(@interface, typeof(IEntity)) && !Equals(@interface, typeof(IInternalEntity)))
         .ToList();
 
       return entityInterfaces.FirstOrDefault(@interface => 
