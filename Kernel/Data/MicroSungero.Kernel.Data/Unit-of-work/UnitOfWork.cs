@@ -258,10 +258,6 @@ namespace MicroSungero.Kernel.Data
 
       await action();
 
-      foreach (var addedEntry in addedEntries)
-      {
-        addedEntry.IsTransient = false;
-      }
       foreach (var deletedEntry in deletedEntries)
       {
         deletedEntry.IsDeleted = true;
@@ -274,6 +270,11 @@ namespace MicroSungero.Kernel.Data
       foreach (var entity in deletedEntries.OfType<IEntity>())
       {
         this.entityLifetimeService.OnEntityDeleted(entity);
+      }
+
+      foreach (var addedEntry in addedEntries)
+      {
+        addedEntry.IsTransient = false;
       }
     }
 

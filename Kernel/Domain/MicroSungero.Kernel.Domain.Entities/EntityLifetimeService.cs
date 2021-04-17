@@ -56,7 +56,7 @@ namespace MicroSungero.Kernel.Domain.Entities
     private void PublishDomainEvent(Type eventType, IEntity entity)
     {
       eventType = eventType.MakeGenericType(entity.GetEntityInterface() ?? entity.GetType());
-      this.domainEventService.Publish((IDomainEvent)Activator.CreateInstance(eventType, entity));
+      this.domainEventService.Publish((IDomainEvent)Activator.CreateInstance(eventType, entity)).Wait();
     }
 
     #endregion
