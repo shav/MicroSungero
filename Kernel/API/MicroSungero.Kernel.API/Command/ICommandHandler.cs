@@ -34,6 +34,6 @@ namespace MicroSungero.Kernel.API
     /// <param name="command">The command.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>A task executing the command.</returns>
-    Task Handle(TCommand command, CancellationToken cancellationToken);
+    Task<Unit> Handle(TCommand command, CancellationToken cancellationToken);
   }
 }
