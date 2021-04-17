@@ -6,6 +6,7 @@ using MicroSungero.Common.Utils;
 using MicroSungero.Kernel.API;
 using MicroSungero.Kernel.API.Behaviors;
 using MicroSungero.Kernel.API.Services;
+using MicroSungero.Kernel.API.Validation;
 using MicroSungero.Kernel.Data;
 using MicroSungero.Kernel.Domain;
 using MicroSungero.Kernel.Domain.DomainEvents;
@@ -34,6 +35,7 @@ namespace MicroSungero.WebAPI.Configuration
       services.AddTransient<IUnitOfWorkFactory, UnitOfWorkFactory>();
       services.AddTransient<IUnitOfWorkScope, UnitOfWorkScope>();
       services.AddTransient<IEntityLifetimeService, EntityLifetimeService>();
+      services.AddTransient<ICommandValidationService, CommandValidationService>();
 
       services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CommandValidationBehaviour<,>));
 
