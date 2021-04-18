@@ -26,6 +26,22 @@ namespace MicroSungero.System.Domain
 
     #endregion
 
+    #region Object
+
+    public override string ToString()
+    {
+      var str = string.Empty;
+      if (!string.IsNullOrWhiteSpace(this.Name))
+        str += this.Name;
+
+      if (!string.IsNullOrWhiteSpace(this.Color?.Value))
+        str += $", {nameof(Color)}: {this.Color}}}";
+
+      return str;
+    }
+
+    #endregion
+
     #region Constructors
 
     /// <summary>
