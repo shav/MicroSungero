@@ -7,7 +7,7 @@ namespace MicroSungero.Kernel.Data.EntityFramework
   /// Base object-relational mapping for child entity type to database table.
   /// </summary>
   /// <typeparam name="TChildEntity">Type of child entity.</typeparam>
-  public abstract class ChildEntityTypeToTableMapping<TChildEntity> : EntityTypeToTableMapping<TChildEntity>
+  public abstract class ChildEntityTypeTableMapping<TChildEntity> : EntityTypeTableMapping<TChildEntity>
     where TChildEntity : ChildEntity
   {
     #region EntityTypeToTableMapping
@@ -28,7 +28,7 @@ namespace MicroSungero.Kernel.Data.EntityFramework
     /// Create object-relational mapping for child entities.
     /// </summary>
     /// <param name="connectionSettings">Database connection settings.</param>
-    protected ChildEntityTypeToTableMapping(IDatabaseConnectionSettings connectionSettings)
+    protected ChildEntityTypeTableMapping(IDatabaseConnectionSettings connectionSettings)
       : base(connectionSettings)
     {
     }

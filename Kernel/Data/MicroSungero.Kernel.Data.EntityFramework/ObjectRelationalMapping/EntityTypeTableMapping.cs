@@ -9,7 +9,7 @@ namespace MicroSungero.Kernel.Data.EntityFramework
   /// Base object-relational mapping for entity type to database table.
   /// </summary>
   /// <typeparam name="TEntity">Type of entity.</typeparam>
-  public abstract class EntityTypeToTableMapping<TEntity> : IEntityTypeConfiguration<TEntity>
+  public abstract class EntityTypeTableMapping<TEntity> : IEntityTypeConfiguration<TEntity>
     where TEntity : Entity
   {
     #region Properties and fields
@@ -97,7 +97,7 @@ namespace MicroSungero.Kernel.Data.EntityFramework
     /// Create object-relational mapping.
     /// </summary>
     /// <param name="connectionSettings">Database connection settings.</param>
-    protected EntityTypeToTableMapping(IDatabaseConnectionSettings connectionSettings)
+    protected EntityTypeTableMapping(IDatabaseConnectionSettings connectionSettings)
     {
       this.connectionSettings = connectionSettings;
       this.namingConvention = new DatabaseNamingConvention(connectionSettings.ServerType);
