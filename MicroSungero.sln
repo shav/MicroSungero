@@ -73,6 +73,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroSungero.System.API.Ser
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroSungero.System.Module", "System\Module\MicroSungero.System.Module\MicroSungero.System.Module.csproj", "{92414228-1654-4585-87C4-1D2E72CE7F24}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroSungero.Common", "Common\MicroSungero.Common\MicroSungero.Common.csproj", "{61503E9D-D11C-4D60-836D-B3448D548744}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -175,6 +177,10 @@ Global
 		{92414228-1654-4585-87C4-1D2E72CE7F24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92414228-1654-4585-87C4-1D2E72CE7F24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92414228-1654-4585-87C4-1D2E72CE7F24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61503E9D-D11C-4D60-836D-B3448D548744}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61503E9D-D11C-4D60-836D-B3448D548744}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61503E9D-D11C-4D60-836D-B3448D548744}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61503E9D-D11C-4D60-836D-B3448D548744}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -211,6 +217,7 @@ Global
 		{1A8580E1-2CF2-4EC5-889D-FA82A63D0634} = {9C998421-BA24-4999-BF99-1E2CB24AC89D}
 		{216EF1B3-516C-4FE6-B0FC-210230FFF690} = {9C998421-BA24-4999-BF99-1E2CB24AC89D}
 		{92414228-1654-4585-87C4-1D2E72CE7F24} = {59C024BF-AC21-47B5-BAA9-A5C05636D3D1}
+		{61503E9D-D11C-4D60-836D-B3448D548744} = {11CE7CDF-FB53-4E67-8449-BA41AE2A5892}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C42FBA66-2A66-4FD1-97AA-6C9FF786B984}
