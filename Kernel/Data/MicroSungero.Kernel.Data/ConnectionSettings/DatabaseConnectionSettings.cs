@@ -19,6 +19,11 @@ namespace MicroSungero.Kernel.Data
     /// </summary>
     public IsolationLevel? TransactionIsolationLevel { get; set; }
 
+    /// <summary>
+    /// Database server type.
+    /// </summary>
+    public DatabaseServerType ServerType { get; set; }
+
     #endregion
   }
 }

@@ -26,15 +26,27 @@ namespace MicroSungero.WebAPI.Configuration
       services.AddTransient<IDbContextFactory, TDbContextFactory>(provider =>
       {
         var databaseSettings = configuration.GetAppSettings()?.DatabaseSettings;
+        if (databaseSettings == null)
+          throw new InvalidOperationException("Database settings are not defined at config.");
+
         var connectionSettings = new DatabaseConnectionSettings
         {
           ConnectionString = databaseSettings.ConnectionString,
-          TransactionIsolationLevel = databaseSettings?.TransactionIsolationLevel
+          TransactionIsolationLevel = databaseSettings.TransactionIsolationLevel,
+          ServerType = databaseSettings.ServerType
         };
 
         var optionsBuilder = new DbContextOptionsBuilder<TDbContext>();
-        optionsBuilder.UseSqlServer(databaseSettings.ConnectionString);
+        switch(databaseSettings.ServerType)
+        {
+          case DatabaseServerType.MSSQLServer:
+            optionsBuilder.UseSqlServer(databaseSettings.ConnectionString);
+            break;
+          case DatabaseServerType.PostgreSQL:
+            optionsBuilder.UseNpgsql(databaseSettings.ConnectionString);
+            break;
 
+        }
         return (TDbContextFactory)Activator.CreateInstance(typeof(TDbContextFactory), optionsBuilder.Options, connectionSettings);
       });
     }

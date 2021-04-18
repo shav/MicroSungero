@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using MicroSungero.Kernel.Data;
 
 namespace MicroSungero.WebAPI.Settings
 {
@@ -16,6 +17,11 @@ namespace MicroSungero.WebAPI.Settings
     /// Database transactions isolation level.
     /// </summary>
     IsolationLevel TransactionIsolationLevel { get; }
+
+    /// <summary>
+    /// Database server type.
+    /// </summary>
+    DatabaseServerType ServerType { get; }
   }
 
   /// <summary>
@@ -43,6 +49,11 @@ namespace MicroSungero.WebAPI.Settings
     /// Database transactions isolation level.
     /// </summary>
     public IsolationLevel TransactionIsolationLevel { get; set; }
+
+    /// <summary>
+    /// Database server type.
+    /// </summary>
+    public DatabaseServerType ServerType { get; set; }
 
     #endregion
   }

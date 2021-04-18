@@ -10,10 +10,30 @@ namespace MicroSungero.Kernel.Data.EntityFramework
   public abstract class ChildEntityTypeToTableMapping<TChildEntity> : EntityTypeToTableMapping<TChildEntity>
     where TChildEntity : ChildEntity
   {
-    public override void Configure(EntityTypeBuilder<TChildEntity> builder)
+    #region EntityTypeToTableMapping
+
+    protected override EntityTypeTableModel BuildEntityModel(EntityTypeBuilder<TChildEntity> builder)
     {
-      base.Configure(builder);
+      var model = base.BuildEntityModel(builder);
       builder.Ignore(t => t.RootEntity);
+
+      return model;
     }
+
+    #endregion
+
+    #region Constructors
+
+    /// <summary>
+    /// Create object-relational mapping for child entities.
+    /// </summary>
+    /// <param name="connectionSettings">Database connection settings.</param>
+    protected ChildEntityTypeToTableMapping(IDatabaseConnectionSettings connectionSettings)
+      : base(connectionSettings)
+    {
+    }
+
+    #endregion
+
   }
 }

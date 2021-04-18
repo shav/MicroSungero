@@ -16,5 +16,10 @@ namespace MicroSungero.Kernel.Data
     /// Transaction isolation level.
     /// </summary>
     IsolationLevel? TransactionIsolationLevel { get; }
+
+    /// <summary>
+    /// Database server type.
+    /// </summary>
+    DatabaseServerType ServerType { get; }
   }
 }
