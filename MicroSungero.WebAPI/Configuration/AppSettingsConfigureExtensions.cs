@@ -16,7 +16,9 @@ namespace MicroSungero.WebAPI.Configuration
     public static AppSettings GetAppSettings(this IConfiguration configuration)
     {
       var databaseSettings = configuration.GetSection(DatabaseSettings.SettingName).Get<DatabaseSettings>();
-      return new AppSettings(databaseSettings);
+      var logSettings = configuration.GetSection(LogSettings.SettingName).Get<LogSettings>();
+
+      return new AppSettings(databaseSettings, logSettings);
     }
   }
 }

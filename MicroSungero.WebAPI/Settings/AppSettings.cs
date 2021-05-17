@@ -12,6 +12,11 @@
     /// </summary>
     public IDatabaseSettings DatabaseSettings { get; }
 
+    /// <summary>
+    /// Log settings.
+    /// </summary>
+    public ILogSettings LogSettings { get; }
+
     #endregion
 
     #region Constructors
@@ -20,9 +25,11 @@
     /// Create application settings.
     /// </summary>
     /// <param name="databaseSettings">Database settings.</param>
-    public AppSettings(IDatabaseSettings databaseSettings)
+    /// <param name="logSettings">Log settings.</param>
+    public AppSettings(IDatabaseSettings databaseSettings, ILogSettings logSettings)
     {
       this.DatabaseSettings = databaseSettings;
+      this.LogSettings = logSettings;
     }
 
     /// <summary>
@@ -31,6 +38,7 @@
     public AppSettings()
     {
       this.DatabaseSettings = new DatabaseSettings();
+      this.LogSettings = new LogSettings();
     }
 
     #endregion

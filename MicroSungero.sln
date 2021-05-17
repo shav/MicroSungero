@@ -73,7 +73,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroSungero.System.API.Ser
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroSungero.System.Module", "System\Module\MicroSungero.System.Module\MicroSungero.System.Module.csproj", "{92414228-1654-4585-87C4-1D2E72CE7F24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroSungero.Common", "Common\MicroSungero.Common\MicroSungero.Common.csproj", "{61503E9D-D11C-4D60-836D-B3448D548744}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroSungero.Common", "Common\MicroSungero.Common\MicroSungero.Common.csproj", "{61503E9D-D11C-4D60-836D-B3448D548744}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroSungero.Common.Logging.NLog", "Common\Logging\MicroSungero.Common.Logging\MicroSungero.Common.Logging.NLog.csproj", "{11D3FDAA-C5C7-4778-801E-0BD9889AA259}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logging", "Logging", "{E005E367-9228-479E-9563-74D9C61744AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroSungero.Common.Logging.Abstractions", "Common\Logging\MicroSungero.Common.Logging.Abstractions\MicroSungero.Common.Logging.Abstractions.csproj", "{D095B222-83CC-4A6B-8E35-25492FB00CFA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -181,6 +187,14 @@ Global
 		{61503E9D-D11C-4D60-836D-B3448D548744}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61503E9D-D11C-4D60-836D-B3448D548744}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61503E9D-D11C-4D60-836D-B3448D548744}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11D3FDAA-C5C7-4778-801E-0BD9889AA259}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11D3FDAA-C5C7-4778-801E-0BD9889AA259}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11D3FDAA-C5C7-4778-801E-0BD9889AA259}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11D3FDAA-C5C7-4778-801E-0BD9889AA259}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D095B222-83CC-4A6B-8E35-25492FB00CFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D095B222-83CC-4A6B-8E35-25492FB00CFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D095B222-83CC-4A6B-8E35-25492FB00CFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D095B222-83CC-4A6B-8E35-25492FB00CFA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -218,6 +232,9 @@ Global
 		{216EF1B3-516C-4FE6-B0FC-210230FFF690} = {9C998421-BA24-4999-BF99-1E2CB24AC89D}
 		{92414228-1654-4585-87C4-1D2E72CE7F24} = {59C024BF-AC21-47B5-BAA9-A5C05636D3D1}
 		{61503E9D-D11C-4D60-836D-B3448D548744} = {11CE7CDF-FB53-4E67-8449-BA41AE2A5892}
+		{11D3FDAA-C5C7-4778-801E-0BD9889AA259} = {E005E367-9228-479E-9563-74D9C61744AE}
+		{E005E367-9228-479E-9563-74D9C61744AE} = {11CE7CDF-FB53-4E67-8449-BA41AE2A5892}
+		{D095B222-83CC-4A6B-8E35-25492FB00CFA} = {E005E367-9228-479E-9563-74D9C61744AE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C42FBA66-2A66-4FD1-97AA-6C9FF786B984}
