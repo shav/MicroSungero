@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\Logging\MicroSungero.Common.Logging.Abstractions\MicroSungero.Common.Logging.Abstractions.csproj" />
     <ProjectReference Include="..\MicroSungero.Kernel.API\MicroSungero.Kernel.API.csproj" />
   </ItemGroup>
 
