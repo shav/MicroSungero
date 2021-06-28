@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using MicroSungero.Kernel.Data;
 using MicroSungero.Kernel.Data.EntityFramework;
 using MicroSungero.Kernel.Domain.Entities;
@@ -45,9 +46,10 @@ namespace MicroSungero.WebAPI.Configuration
           case DatabaseServerType.PostgreSQL:
             optionsBuilder.UseNpgsql(databaseSettings.ConnectionString);
             break;
-
         }
-        return (TDbContextFactory)Activator.CreateInstance(typeof(TDbContextFactory), optionsBuilder.Options, connectionSettings);
+
+        var logFactory = services.BuildServiceProvider().GetService<ILoggerFactory>();
+        return (TDbContextFactory)Activator.CreateInstance(typeof(TDbContextFactory), optionsBuilder.Options, logFactory, connectionSettings);
       });
     }
 

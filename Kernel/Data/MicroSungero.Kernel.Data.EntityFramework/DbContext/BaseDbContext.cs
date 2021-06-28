@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using MicroSungero.Kernel.Domain.Entities;
 
 namespace MicroSungero.Kernel.Data.EntityFramework
@@ -140,6 +141,13 @@ namespace MicroSungero.Kernel.Data.EntityFramework
       modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+      optionsBuilder
+        .UseLoggerFactory(this.logFactory)
+        .EnableSensitiveDataLogging();
+    }
+
     #endregion
 
     #region Properties and fields
@@ -154,6 +162,11 @@ namespace MicroSungero.Kernel.Data.EntityFramework
     /// </summary>
     public IsolationLevel TransactionIsolationLevel => this.ConnectionSettings?.TransactionIsolationLevel ?? DEFAULT_TRANSACTION_ISOLATION_LEVEL;
 
+    /// <summary>
+    /// Logger factory.
+    /// </summary>
+    private readonly ILoggerFactory logFactory;
+
     #endregion
 
     #region Constructors
@@ -162,11 +175,13 @@ namespace MicroSungero.Kernel.Data.EntityFramework
     /// Create database context.
     /// </summary>
     /// <param name="options">Options.</param>
+    /// <param name="logFactory">Log factory.</param>
     /// <param name="connectionSettings">Database connection settings.</param>
-    public BaseDbContext(DbContextOptions options, IDatabaseConnectionSettings connectionSettings = null)
+    public BaseDbContext(DbContextOptions options, ILoggerFactory logFactory, IDatabaseConnectionSettings connectionSettings = null)
       : base(options)
     {
       this.ConnectionSettings = connectionSettings;
+      this.logFactory = logFactory;
     }
 
     #endregion
