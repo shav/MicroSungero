@@ -38,7 +38,8 @@ namespace MicroSungero.WebAPI.Configuration
       services.AddTransient<ICommandValidationService, CommandValidationService>();
 
       services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestLoggingBehaviour<,>));
-      services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CommandValidationBehaviour<,>));      
+      services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
+      services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CommandValidationBehaviour<,>));
 
       var domainModules = new[]
       {
